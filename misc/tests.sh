@@ -321,7 +321,7 @@ cmp_ics "--show-teams-infomation --delete-4th-line-onwar  -Fgaroon -Cutf-8 all" 
 cmp_ics "--show-teams-infomation --delete-4th-line-onwar -Fgaroon -Cutf-8 all" "ouc16" "ou16-4th"
 
 echo
-echo "MEMO: 文字コード変換テスト(ICSファイル側にShiftJISに変換できない文字があると差分となる)"
+echo "MEMO: 文字コード変換テスト(ICSファイル側にShift_JISに変換できない文字があると差分となる)"
 
 NKF=on
 cmp_ics "--show-teams-infomation -Fgaroon all" "ou16" "ou16-teams"
