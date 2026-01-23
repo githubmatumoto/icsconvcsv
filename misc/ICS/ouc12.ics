@@ -1,0 +1,311 @@
+BEGIN:VCALENDAR
+PRODID:-//Microsoft Corporation//Outlook 16.0 MIMEDIR//EN
+VERSION:2.0
+METHOD:PUBLISH
+X-CALSTART:20251227T000000Z
+X-CALSTART:20251227T000000
+X-CALEND:20251227T063000Z
+X-CALEND:20251228T000000
+X-CLIPSTART:20251226T150000Z
+X-CLIPEND:20251227T150000Z
+X-WR-RELCALID:{0000002E-86F8-9834-66DB-251B345FE7C0}
+X-WR-CALNAME:Fukuoka Taro
+X-PRIMARY-CALENDAR:TRUE
+X-OWNER;CN="Fukuoka Taro":mailto:fukuoka.taro@example.jp
+X-MS-OLK-WKHRSTART;TZID="東京 (標準時)":083000
+X-MS-OLK-WKHREND;TZID="東京 (標準時)":171500
+X-MS-OLK-WKHRDAYS:MO,TU,WE,TH,FR
+BEGIN:VTIMEZONE
+TZID:Tokyo Standard Time
+BEGIN:STANDARD
+DTSTART:16010101T000000
+TZOFFSETFROM:+0900
+TZOFFSETTO:+0900
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VTIMEZONE
+TZID:東京 (標準時)
+BEGIN:STANDARD
+DTSTART:16010101T000000
+TZOFFSETFROM:+0900
+TZOFFSETTO:+0900
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20251222T080455Z
+DESCRIPTION:\n可\n行頭改行\n2025年12月27日 9時00分-9時30分\n
+DTEND;TZID="Tokyo Standard Time":20251227T093000
+DTSTAMP:20260119T015719Z
+DTSTART;TZID="Tokyo Standard Time":20251227T090000
+LAST-MODIFIED:20260106T040234Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:70:拡張業務番号%9900
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E008000000002F63C7A81973DC01000000000000000
+	010000000C1DCE6B7A222DF4CA38C4B547D9C4B15
+X-ALT-DESC;FMTTYPE=text/html:<meta http-equiv="Content-Type" content="text/
+	html\; charset=iso-2022-jp"><div style="font-family: Aptos\, Aptos_Embedde
+	dFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-serif\; font-size
+	: 12pt\; color: rgb(0\, 0\, 0)\;" class="elementToProof"><br></div><div st
+	yle="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\, Calib
+	ri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;" c
+	lass="elementToProof">可</div><div style="font-family: Aptos\, Aptos_Embe
+	ddedFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-serif\; font-s
+	ize: 12pt\; color: rgb(0\, 0\, 0)\;" class="elementToProof">行頭改行</
+	div><div style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontServ
+	ice\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\,
+	0\, 0)\;">2025年12月27日 9時00分-9時30分</div>
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+END:VEVENT
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20251222T080538Z
+DESCRIPTION: \n可\n行頭空白1文字※TABは受け付けてくれない
+	\n2025年12月27日 9時30分-10時00分\n
+DTEND;TZID="Tokyo Standard Time":20251227T100000
+DTSTAMP:20260119T015719Z
+DTSTART;TZID="Tokyo Standard Time":20251227T093000
+LAST-MODIFIED:20260106T040233Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:71:拡張業務番号%9901
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E0080000000019AA17C21973DC01000000000000000
+	0100000005E40628A00DE984DBF4CC62917AC711D
+X-ALT-DESC;FMTTYPE=text/html:<meta http-equiv="Content-Type" content="text/
+	html\; charset=iso-2022-jp"><div style="font-family: Aptos\, Aptos_Embedde
+	dFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-serif\; font-size
+	: 12pt\; color: rgb(0\, 0\, 0)\;" class="elementToProof">&nbsp\;</div><div
+	 style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\, Ca
+	libri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;
+	" class="elementToProof">可</div><div style="font-family: Aptos\, Aptos_E
+	mbeddedFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-serif\; fon
+	t-size: 12pt\; color: rgb(0\, 0\, 0)\;" class="elementToProof">行頭空
+	白1文字※TABは受け付けてくれない</div><div style="font-famil
+	y: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\, Calibri\, Helvetica\
+	, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;">2025年12月27
+	日 9時30分-10時00分</div>
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+END:VEVENT
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20251222T080850Z
+DESCRIPTION: \n可\n行頭空白2文字※TABは受け付けてくれない
+	\n2025年12月27日 10時30分-11時00分\n
+DTEND;TZID="Tokyo Standard Time":20251227T103000
+DTSTAMP:20260119T015719Z
+DTSTART;TZID="Tokyo Standard Time":20251227T100000
+LAST-MODIFIED:20260106T040232Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:72:拡張業務番号%9902
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E00800000000C4CC81341A73DC01000000000000000
+	0100000002646A47800C9E8418B1EF9F58369F6D8
+X-ALT-DESC;FMTTYPE=text/html:<meta http-equiv="Content-Type" content="text/
+	html\; charset=iso-2022-jp"><div style="font-family: Aptos\, Aptos_Embedde
+	dFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-serif\; font-size
+	: 12pt\; color: rgb(0\, 0\, 0)\;" class="elementToProof">&nbsp\;</div><div
+	 style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\, Ca
+	libri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;
+	" class="elementToProof">可</div><div style="font-family: Aptos\, Aptos_E
+	mbeddedFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-serif\; fon
+	t-size: 12pt\; color: rgb(0\, 0\, 0)\;" class="elementToProof">行頭空
+	白2文字※TABは受け付けてくれない</div><div style="font-famil
+	y: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\, Calibri\, Helvetica\
+	, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;">2025年12月27
+	日 10時30分-11時00分</div>
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+END:VEVENT
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20251222T080909Z
+DESCRIPTION:9904\n可\nメモ欄とタイトルの業務番号相違。タ
+	イトル欄優先\n2025年12月27日 11時00分-11時30分\n
+DTEND;TZID="Tokyo Standard Time":20251227T113000
+DTSTAMP:20260119T015719Z
+DTSTART;TZID="Tokyo Standard Time":20251227T110000
+LAST-MODIFIED:20260106T040232Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:73:拡張業務番号(タイトル欄優先)%9903
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E00800000000FE38EF3F1A73DC01000000000000000
+	010000000C3B70A8ADCD54344A2DFDF9DC1DA08DE
+X-ALT-DESC;FMTTYPE=text/html:<html>\n<head>\n<meta http-equiv="Content-Type
+	" content="text/html\; charset=iso-2022-jp">\n</head>\n<body>\n<div style=
+	"font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\, Calibri\,
+	 Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;">\n990
+	4</div>\n<div style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFon
+	tService\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb
+	(0\, 0\, 0)\;">\n可</div>\n<div style="font-family: Aptos\, Aptos_Embedde
+	dFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-serif\; font-size
+	: 12pt\; color: rgb(0\, 0\, 0)\;">\nメモ欄とタイトルの業務番
+	号相違。タイトル欄優先</div>\n<div style="font-family: Aptos\,
+	Aptos_EmbeddedFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-seri
+	f\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;">\n2025年12月27日 11時00
+	分-11時30分</div>\n</body>\n</html>\n
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+END:VEVENT
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20251222T080937Z
+DTEND;TZID="Tokyo Standard Time":20251227T133000
+DTSTAMP:20260119T015719Z
+DTSTART;TZID="Tokyo Standard Time":20251227T130000
+LAST-MODIFIED:20260106T040229Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:75:拡張業務番号(未記入)%9906
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E00800000000E22CD4501A73DC01000000000000000
+	01000000032A80FB9C7B6D540B3870A0998C6CDAC
+X-ALT-DESC;FMTTYPE=text/html:
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+END:VEVENT
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20251222T080929Z
+DESCRIPTION:2025年12月27日 11時30分-12時00分\n
+DTEND;TZID="Tokyo Standard Time":20251227T120000
+DTSTAMP:20260119T015719Z
+DTSTART;TZID="Tokyo Standard Time":20251227T113000
+LAST-MODIFIED:20260106T040230Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:74:拡張業務番号(一行めに関係ない記
+	述)%9905
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E00800000000D817B04B1A73DC01000000000000000
+	0100000000182DF4393B42846856C6174D7CF2172
+X-ALT-DESC;FMTTYPE=text/html:<meta http-equiv="Content-Type" content="text/
+	html\; charset=iso-2022-jp"><div style="font-family: Aptos\, Aptos_Embedde
+	dFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-serif\; font-size
+	: 12pt\; color: rgb(0\, 0\, 0)\;">2025年12月27日 11時30分-12時00分<
+	/div>
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+END:VEVENT
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20251222T081121Z
+DESCRIPTION:(N/A)\n
+DTEND;TZID="Tokyo Standard Time":20251227T140000
+DTSTAMP:20260119T015719Z
+DTSTART;TZID="Tokyo Standard Time":20251227T133000
+LAST-MODIFIED:20260106T040228Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:76:拡張業務番号(禁則文字N/A)%9907
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E0080000000001DFB48E1A73DC01000000000000000
+	010000000E354734D612955448A9F89B6895FD1B5
+X-ALT-DESC;FMTTYPE=text/html:<div style="font-family: Aptos\, Aptos_Embedde
+	dFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-serif\; font-size
+	: 12pt\; color: rgb(0\, 0\, 0)\;" class="elementToProof">(N/A)</div>
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+END:VEVENT
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20251222T081205Z
+DESCRIPTION:  \n可\n行頭空白2文字※TABは受け付けてくれな
+	い\n2025年12月27日 14時00分-14時30分\n
+DTEND;TZID="Tokyo Standard Time":20251227T143000
+DTSTAMP:20260119T015719Z
+DTSTART;TZID="Tokyo Standard Time":20251227T140000
+LAST-MODIFIED:20260106T040228Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:77:拡張業務番号(別記法)g9608
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E0080000000045DE20A91A73DC01000000000000000
+	010000000FE9227865976AA4DB9F5F47525D63040
+X-ALT-DESC;FMTTYPE=text/html:<meta http-equiv="Content-Type" content="text/
+	html\; charset=iso-2022-jp"><div style="font-family: Aptos\, Aptos_Embedde
+	dFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-serif\; font-size
+	: 12pt\; color: rgb(0\, 0\, 0)\;" class="elementToProof">&nbsp\;&nbsp\;</d
+	iv><div style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontServi
+	ce\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0
+	\, 0)\;" class="elementToProof">可</div><div style="font-family: Aptos\,
+	Aptos_EmbeddedFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-seri
+	f\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;" class="elementToProof">行
+	頭空白2文字※TABは受け付けてくれない</div><div style="font
+	-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\, Calibri\, Helv
+	etica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;">2025年12
+	月27日 14時00分-14時30分</div>
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+END:VEVENT
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20251222T081232Z
+DESCRIPTION:９６１０\n可\nメモ欄とタイトルの業務番号相
+	違。タイトル欄優先。メモ欄全角\n2025年12月27日 14時30
+	分-15時00分\n
+DTEND;TZID="Tokyo Standard Time":20251227T150000
+DTSTAMP:20260119T015719Z
+DTSTART;TZID="Tokyo Standard Time":20251227T143000
+LAST-MODIFIED:20260106T040225Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:78:拡張業務番号(別記法タイトル欄優
+	先)g9609
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E008000000003FBB25B91A73DC01000000000000000
+	0100000000C5FF73E70CE364AAFF207A2FD8E5F70
+X-ALT-DESC;FMTTYPE=text/html:<html>\n<head>\n<meta http-equiv="Content-Type
+	" content="text/html\; charset=iso-2022-jp">\n</head>\n<body>\n<div style=
+	"font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\, Calibri\,
+	 Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;">\n９
+	６１０</div>\n<div style="font-family: Aptos\, Aptos_EmbeddedFont\, Apt
+	os_MSFontService\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; co
+	lor: rgb(0\, 0\, 0)\;">\n可</div>\n<div style="font-family: Aptos\, Aptos
+	_EmbeddedFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-serif\; f
+	ont-size: 12pt\; color: rgb(0\, 0\, 0)\;">\nメモ欄とタイトルの業
+	務番号相違。タイトル欄優先。メモ欄全角</div>\n<div styl
+	e="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\, Calibri
+	\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;">\n2
+	025年12月27日 14時30分-15時00分</div>\n</body>\n</html>\n
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+END:VEVENT
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20251222T081302Z
+DESCRIPTION:　\n可\n行頭全角空白1文字\n2025年12月27日 15時00
+	分-15時30分\n
+DTEND;TZID="Tokyo Standard Time":20251227T153000
+DTSTAMP:20260119T015719Z
+DTSTART;TZID="Tokyo Standard Time":20251227T150000
+LAST-MODIFIED:20260106T040224Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:79:拡張業務番号(別記法/行頭全角空白
+	)g9611
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E008000000007BF5A0CA1A73DC01000000000000000
+	0100000006703A94E1A9E384BB42D815CD2C0259B
+X-ALT-DESC;FMTTYPE=text/html:<meta http-equiv="Content-Type" content="text/
+	html\; charset=iso-2022-jp"><div style="font-family: Aptos\, Aptos_Embedde
+	dFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-serif\; font-size
+	: 12pt\; color: rgb(0\, 0\, 0)\;">　</div><div style="font-family: Aptos\
+	, Aptos_EmbeddedFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-se
+	rif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;" class="elementToProof">
+	可</div><div style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFon
+	tService\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb
+	(0\, 0\, 0)\;" class="elementToProof">行頭全角空白1文字</div><div
+	style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\, Cal
+	ibri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;"
+	>2025年12月27日 15時00分-15時30分</div>
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+END:VEVENT
+END:VCALENDAR
