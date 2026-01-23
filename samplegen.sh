@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "MEMO: Linuxのテスト用Shell script"
 echo "MEMO: カレントディレクトリにICSファイルを calendar.ics という名前で置いてください。"
-echo "MEMO: Excelで読む時は文字コードShiftJISのファイルを使ってください"
+echo "MEMO: Excelで読む時は文字コードShift_JISのファイルを使ってください"
 #
 echo
 echo "MEMO: CSVのSimple形式で生成しています。"

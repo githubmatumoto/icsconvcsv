@@ -20,7 +20,7 @@
 - CSVでダブルクオートで囲まれた文字列の最後に改行が空白があった場合除
   去するコードを追加。
 
-- 出力文字コードがShiftJISの時にUTF-8からShiftJISに変換する作業に失敗
+- 出力文字コードがShift_JISの時にUTF-8からShift_JISに変換する作業に失敗
   した時のエスケープ手段がstdoutに出力した時とファイルに出力した時で異なっ
   たので、統一。
 
@@ -185,7 +185,7 @@ def modify_reference_id_data()
   G_SPLIT_SUMMARY_ENHANCE
 ```
 
-## 2026-1-5: Version:3.0
+## 2026-1-23: Version:3.0
 (内部メモ:subversion revision xxxx, フォルダv3.0)
 
 - ソフトウエア名をics2gacsvからicsconvcsvに変更。 ソフトウエア名に商標
@@ -200,6 +200,9 @@ def modify_reference_id_data()
 - Pythonのclassを導入しています。ただし名前空間を綺麗にするためだけに
 使っていますので、オブジェクト指向は用いてません。
 
+  また関数名の整理をおこなっています。そのため、CHANGELOG.mdに記載の
+  v2.1以前の修正についても該当する関数が現存しない場合があります。
+
 - 関数名で時刻情報のnaiveをnativeと誤記してたので修正。
 
 - 引数解析関数を独立させ(PreSetup.parse_args())ライブラリ側に統合。引
@@ -210,6 +213,9 @@ def modify_reference_id_data()
   コマンドの挙動が変わるような構成になってます。
 
 - 文字コードを指定するオプション 「-C"文字列"」追加。
+  -Cshift_jis, -Cutf_8, -Cutf_8_sig
+
+  utf_8_sigはBOM(Byte Order Mark)を付与する。
 
   文字コードを指定するオプション 「-u 」削除。
 
@@ -220,9 +226,8 @@ def modify_reference_id_data()
   Garoonとほぼ同等の出力に変更する場合は「-FGaroon」を
   指定する。
 
-- デフォルトの文字コードを
-ShiftJISからUTF-8に変更。但し「-FGaroon」を指定するとデフォルトは
-ShiftJIS。
+- デフォルトの文字コードをShift_JISからUTF-8に変更。但し「-FGaroon」を
+指定するとデフォルトはShift_JIS。
 
 - CSVの終日スケジュールの時刻形式を指定するオプションの整理
 
@@ -238,7 +243,7 @@ ShiftJIS。
 
 - 多くのショートオプション(1文字)廃止。ロングオプション(複数文字)に変更。
 
-- CSVのヘッダを表示するオプション追加。
+- CSVのヘッダ(1行めの項目)を表示するオプション追加。
   --print-csv-header, -k
 
 - 出力ファイルの上書き確認/入力ファイルの日付確認を行なうオプション追加。
@@ -275,7 +280,7 @@ DESCRIPTIONに最初から上記が入って場合は誤動作する。
 - 業務番号を暗に4桁と想定している。5桁以上なら下記関数の正規表現を修正
 する。
 
-> modify_enhanced_gyoumunum()
+> ModCSV.enhanced_gyoumunum()
 
 - 繰り返し命令でRDATEは生成される環境がないため未対応としていたが、
   Windowsアプリ版 Outlook(classic)で生成したICSファイルで一部条件でICS

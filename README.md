@@ -204,7 +204,7 @@ Windows用 : Windowsバッチファイル
 
 > $ samplegen.bat
 
-ShiftJISの下記のファイルが生成されます。
+Shift_JISの下記のファイルが生成されます。
 
 - sjis-202512.csv : 2025年12月のスケジュール (CSVのsimple形式)
 - sjis-202601.csv : 2026年1月のスケジュール
@@ -223,7 +223,7 @@ Linux,macOS用: Shellスクリプト
 - utf8-202601.csv : 2026年1月のスケジュール
 - utf8-all.csv    : すべてのスケジュール
 
-Excelで閲覧や編集する場合は文字コードがShiftJISのファイル
+Excelで閲覧や編集する場合は文字コードがShift_JISのファイル
 (sjis-*.csv)を使ってください。
 
 ※セキュリティエラーが出たら中身を1行づつコピペして実行してください。
