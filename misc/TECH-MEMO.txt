@@ -1,0 +1,10 @@
+                 　　　ICS to CSV コンバータ
+                            ics2gacsv
+　　　　　　　　　　　　　テクニカルメモ
+                                                    (初版) 2025/9/24
+                                               (最終更新) 2025/12/18
+                                                         by 松元隆二
+
+
+Qiitaに引越ししてます。
+https://qiita.com/qiitamatumoto/items/82b4c49df68162d942e1
