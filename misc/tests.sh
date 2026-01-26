@@ -30,7 +30,7 @@ NKF=off
 # on: CSV 正規化あり
 NORMAL=off
 
-PROG_NORMAL=../normal_csv.py
+PROG_NORMAL=./normal_csv.py
 # 上記プログラムで表示する行数
 # -1, -2, -3, -4, -5,
 # 無指定もしくは-aなら全部
