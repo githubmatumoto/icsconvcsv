@@ -1144,15 +1144,16 @@ class PreSetup:
 
     ###
     @staticmethod
-    def find_ics_data(data: list, key: str, stop=True) -> int:
+    def find_ics_data(data: list, key: str, exit_none=True) -> int:
         """
         文字列型で渡されたVEVENTのデータdataからkeyで指示された
-        要素がある行を探します。stop=Trueの場合は例外を送出します。
+        要素がある行を探します。要素が見つからない場合exit_none=True
+        の場合は例外を送出します。
         """
         for i, d in enumerate(data):
             if re.match(key, d):
                 return i
-        if stop:
+        if exit_none:
             raise RuntimeError(f"ICSのアイテム「{key}」が無いVEVENTが渡された")
         return -1
 
@@ -1277,7 +1278,7 @@ class FileIO:
     @staticmethod
     def file2str(fname: str) -> str:
         """
-        ファイルから読み込み
+        ファイルから読み込み、文字列型で返します。
     """
         ret = ""
         if fname == "stdout" or fname[0] == "-":
@@ -1718,8 +1719,8 @@ class ModCSV:
     @staticmethod
     def modify_csv(csv_buffer: list, timerange: int) -> list:
         """
-        timerange範囲外のデータをすてる
-        各種加工を行う。出力対象のCSVの行数をlistで返す。
+        1. timerange範囲外のデータをすてる
+        2. 各種加工を行う。出力対象のCSVの行数をlistで返す。
         """
         ###################
         ret_index = []
@@ -1787,20 +1788,18 @@ class RecurrenceID:
     @staticmethod
     def restore_aux(buff: list, recurrence_id_list: dict, outlook_bugfix=False) -> int:
         """
-        TODO: 関数コメントが意味不明だから書き換える。
+        RECURRENCE-IDで上書きするVEVENTはSUMMARYやDESCRIPTIONが未定義
+        の場合がある。本関数で、復元する。
 
-        RECURRENCE-IDで上書きするVEVENTはSUMMARYやDESCRIPTIONが未定義の場合が
-        ある。復元する。なお、SUMMARYやDESCRIPTIONは各種加工が入っているので、
-        buffに入ってるのを使った方がよい。
+        なお、buffを参照渡しで使ってるため、buff[x] の値を直接書き換えずに、
+        buff[x][y]を書き換えてください。
 
         空文字の場合と未定義の場合を区別するため、未定義の場合は"(N/A)"が入ってる。
-        バグ: 仕様: RECURRENCE-IDで時刻を上書きした場合、上書きの基となるVEVENTが
-        出力対象としている月の外になった場合、復元できない事がある。
-        全期間データをバッファリングしないといけないので仕様とする。
 
-        RECURRENCE-IDで上書きするVEVENTを消す。もしくは印をつける。
+        restore_aux()を呼び出したあと、復元に失敗しているVEVENTがあれば、
+        outlook_bugfix=Trueにして再度呼び出している。デバック時は注意。
 
-    """
+        """
         bad_count = 0
 
         uid2line = {}
@@ -1875,7 +1874,6 @@ class RecurrenceID:
         """
         RECURRENCE-IDで上書きするVEVENTはSUMMARYやDESCRIPTIONが未定義の場合が
         ある。復元する。
-        RECURRENCE-IDで上書きするVEVENTを消す。もしくは印をつける。
     """
         bad_recurrence_id_count = RecurrenceID.restore_aux(buff, recurrence_id_list)
         if bad_recurrence_id_count > 0:
@@ -1894,7 +1892,7 @@ class RecurrenceID:
         # 浮いてたrecurrence_id_list。
         # 例えば4月のスケジュール生成時に3月のデータを引用してたら浮く。
         # Outlook(classic)の場合は「(REFERENCE DATA DOES NOT EXIST)」となる。
-        # Outlook(Web)の場合は特に問題なし。
+        # Outlook(Web)の場合はこの問題は発生しない。
         if len(recurrence_id_list) > 0:
             print("WARNING: ICSファイルの異常です。参照先が無い繰返し命令があります。", file=sys.stderr)
             RecurrenceID.id_list_dump(recurrence_id_list, "BROKEN VEVENT:")
@@ -2030,6 +2028,7 @@ class Main:
             if (not rrule is None) and (not recurrence_id is None):
                 raise ValueError("ERROR: ICSデータ不整合: 同一VEVENTにRECURRENCE-IDとRRULEがあります。")
 
+            # Known bugs: RDATEに対応はしたが、動作確認例が少ないため、要注意。
             #if Misc.get_ics_val(component, 'rdate', ConstDat.NA) != ConstDat.NA:
             #    raise RuntimeError("ERROR: 本プログラム未実装のICS命令RDATEが使われています。")
             #

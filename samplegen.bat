@@ -3,7 +3,7 @@ REM MEMO:カレントディレクトリにICSファイルを calendar.ics という名前で置いてくだ
 
 REM
 REM MEMO:CSVのSimple形式で生成しています。
-REM MEMO:ShiftJISで生成しています。UTF-8にする場合は引数 -Cutf-8 を使ってください。
+REM MEMO:shift_jisで生成しています。UTF-8にする場合は引数 -Cutf_8 を使ってください。
 python3 icsconvcsv.py -Cshift_jis 202512 calendar.ics  sjis-202512.csv
 python3 icsconvcsv.py -Cshift_jis guess  calendar.ics  sjis-202601.csv
 python3 icsconvcsv.py -Cshift_jis all    calendar.ics  sjis-all.csv

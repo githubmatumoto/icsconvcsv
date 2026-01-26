@@ -1,11 +1,11 @@
 #!/bin/bash
 echo "MEMO: Linuxのテスト用Shell script"
 echo "MEMO: カレントディレクトリにICSファイルを calendar.ics という名前で置いてください。"
-echo "MEMO: Excelで読む時は文字コードShift_JISのファイルを使ってください"
+echo "MEMO: Excelで読む時は文字コードshift_jisのファイルを使ってください"
 #
 echo
 echo "MEMO: CSVのSimple形式で生成しています。"
-echo "MEMO: 文字コードUTF-8で生成"
+echo "MEMO: 文字コードutf_8で生成"
 python3 icsconvcsv.py 202512 calendar.ics  utf8-202512.csv
 python3 icsconvcsv.py guess  calendar.ics  utf8-202601.csv
 python3 icsconvcsv.py  all   calendar.ics  utf8-all.csv
