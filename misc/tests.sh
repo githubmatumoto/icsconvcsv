@@ -5,12 +5,12 @@
 #
 # コマンド「icsconvcsv.py」に様々なICSおよびオプションを与えて期待した
 # 値が出力されるかのテストスクリプト。どのようなICSデータを与えてるか
-# はREADME.test.md 参照ください。
+# はREADME.tests.md 参照ください。
 #
 # 補足: スクリプトで nkf を使ってます。nkfをインストールください。
 
 PYTHON=python3
-PROGNAME=./icsconvcsv.py
+PROGNAME=../icsconvcsv.py
 
 TIMERANG=all
 
@@ -30,7 +30,7 @@ NKF=off
 # on: CSV 正規化あり
 NORMAL=off
 
-PROG_NORMAL=./normal_csv.py
+PROG_NORMAL=../normal_csv.py
 # 上記プログラムで表示する行数
 # -1, -2, -3, -4, -5,
 # 無指定もしくは-aなら全部
