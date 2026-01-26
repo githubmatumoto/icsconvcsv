@@ -1,0 +1,223 @@
+BEGIN:VCALENDAR
+PRODID:-//Microsoft Corporation//Outlook 16.0 MIMEDIR//EN
+VERSION:2.0
+METHOD:PUBLISH
+X-CALSTART:20260425T230000Z
+X-CALEND:20260604T000000
+X-CLIPSTART:20260424T150000Z
+X-CLIPEND:20260604T150000Z
+X-WR-RELCALID:{0000002E-86F8-9834-66DB-251B345FE7C0}
+X-WR-CALNAME:Fukuoka Taro
+X-PRIMARY-CALENDAR:TRUE
+X-OWNER;CN="Fukuoka Taro":mailto:fukuoka.taro@example.jp
+X-MS-OLK-WKHRSTART;TZID="東京 (標準時)":083000
+X-MS-OLK-WKHREND;TZID="東京 (標準時)":171500
+X-MS-OLK-WKHRDAYS:MO,TU,WE,TH,FR
+BEGIN:VTIMEZONE
+TZID:Tokyo Standard Time
+BEGIN:STANDARD
+DTSTART:16010101T000000
+TZOFFSETFROM:+0900
+TZOFFSETTO:+0900
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VTIMEZONE
+TZID:東京 (標準時)
+BEGIN:STANDARD
+DTSTART:16010101T000000
+TZOFFSETFROM:+0900
+TZOFFSETTO:+0900
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20251126T072657Z
+DESCRIPTION:テスト前\\\\テスト後\n2026年5月22日  14時00分-
+	14時30分\n
+DTEND;TZID="Tokyo Standard Time":20260522T143000
+DTSTAMP:20260119T012557Z
+DTSTART;TZID="Tokyo Standard Time":20260522T140000
+LAST-MODIFIED:20251126T080656Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:65:記号テスト\\\\切れる
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E00800000000B7545D0CA65EDC01000000000000000
+	01000000010BCE7440DC3E34D80EAFCCF30F34ADB
+X-ALT-DESC;FMTTYPE=text/html:<html>\n<head>\n<meta http-equiv="Content-Type
+	" content="text/html\; charset=utf-8">\n</head>\n<body>\n<div class="eleme
+	ntToProof" style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontSe
+	rvice\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\
+	, 0\, 0)\;">\nテスト前\\\\テスト後</div>\n<div class="elementToPro
+	of" style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\,
+	 Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0
+	)\;">\n2026年5月22日  14時00分-14時30分</div>\n</body>\n</html>
+	\n
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20251126T072642Z
+DESCRIPTION:テスト前\\\;テスト後\n2026年5月22日 13時30分-14時
+	00分\n
+DTEND;TZID="Tokyo Standard Time":20260522T140000
+DTSTAMP:20260119T012557Z
+DTSTART;TZID="Tokyo Standard Time":20260522T133000
+LAST-MODIFIED:20251126T080646Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:64:記号テスト\\\;切れる
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E008000000007D106A03A65EDC01000000000000000
+	010000000B2D60DD0F466594F9AB5ADA5D2E85A82
+X-ALT-DESC;FMTTYPE=text/html:<html>\n<head>\n<meta http-equiv="Content-Type
+	" content="text/html\; charset=iso-2022-jp">\n</head>\n<body>\n<div class=
+	"elementToProof" style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MS
+	FontService\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color:
+	rgb(0\, 0\, 0)\;">\nテスト前\\\;テスト後</div>\n<div class="elemen
+	tToProof" style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontSer
+	vice\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\,
+	 0\, 0)\;">\n2026年5月22日 13時30分-14時00分</div>\n</body>\n</html
+	>\n
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20251126T072450Z
+DESCRIPTION:テスト前\\\,テスト後\n2026年5月22日 13時00分-13時
+	30分\n
+DTEND;TZID="Tokyo Standard Time":20260522T133000
+DTSTAMP:20260119T012557Z
+DTSTART;TZID="Tokyo Standard Time":20260522T130000
+LAST-MODIFIED:20251126T080616Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:63:記号テスト\\\,切れる
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E00800000000A05759C0A55EDC01000000000000000
+	0100000007AE005D763AD364AA5212155F0406B8F
+X-ALT-DESC;FMTTYPE=text/html:<html>\n<head>\n<meta http-equiv="Content-Type
+	" content="text/html\; charset=iso-2022-jp">\n</head>\n<body>\n<div class=
+	"elementToProof" style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MS
+	FontService\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color:
+	rgb(0\, 0\, 0)\;">\nテスト前\\\,テスト後</div>\n<div class="elemen
+	tToProof" style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontSer
+	vice\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\,
+	 0\, 0)\;">\n2026年5月22日 13時00分-13時30分</div>\n</body>\n</html
+	>\n
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20251126T072427Z
+DESCRIPTION:テスト前\\テスト後\n2026年5月22日 10時30分-11時00
+	分\n
+DTEND;TZID="Tokyo Standard Time":20260522T110000
+DTSTAMP:20260119T012557Z
+DTSTART;TZID="Tokyo Standard Time":20260522T103000
+LAST-MODIFIED:20251126T080602Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:62:記号テスト\\切れる
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E008000000003F1593B2A55EDC01000000000000000
+	010000000A69DE6C3DDB88C48B89695B7B5031567
+X-ALT-DESC;FMTTYPE=text/html:<html>\n<head>\n<meta http-equiv="Content-Type
+	" content="text/html\; charset=iso-2022-jp">\n</head>\n<body>\n<div class=
+	"elementToProof" style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MS
+	FontService\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color:
+	rgb(0\, 0\, 0)\;">\nテスト前\\テスト後</div>\n<div class="elementT
+	oProof" style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontServi
+	ce\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0
+	\, 0)\;">\n2026年5月22日 10時30分-11時00分</div>\n</body>\n</html>\
+	n
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20251126T072405Z
+DESCRIPTION:テスト前\;テスト後\n2026年5月22日 10時00分-10時30
+	分\n
+DTEND;TZID="Tokyo Standard Time":20260522T103000
+DTSTAMP:20260119T012557Z
+DTSTART;TZID="Tokyo Standard Time":20260522T100000
+LAST-MODIFIED:20251126T080545Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:61:記号テスト\;切れる
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E00800000000803F9CA5A55EDC01000000000000000
+	01000000022B85604DCEC854F8C96788B3E6F98DA
+X-ALT-DESC;FMTTYPE=text/html:<html>\n<head>\n<meta http-equiv="Content-Type
+	" content="text/html\; charset=iso-2022-jp">\n</head>\n<body>\n<div class=
+	"elementToProof" style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MS
+	FontService\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color:
+	rgb(0\, 0\, 0)\;">\nテスト前\;テスト後</div>\n<div class="elementT
+	oProof" style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontServi
+	ce\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0
+	\, 0)\;">\n2026年5月22日 10時00分-10時30分</div>\n</body>\n</html>\
+	n
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20251126T072333Z
+DESCRIPTION:テスト前\,テスト後\n2026年5月22日 9時30分-10時00
+	分\n
+DTEND;TZID="Tokyo Standard Time":20260522T100000
+DTSTAMP:20260119T012557Z
+DTSTART;TZID="Tokyo Standard Time":20260522T093000
+LAST-MODIFIED:20251126T080522Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:60:記号テスト\,切れる
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E00800000000D2BCAA92A55EDC01000000000000000
+	01000000085C531FC46425B4D8E916687FC6B4919
+X-ALT-DESC;FMTTYPE=text/html:<html>\n<head>\n<meta http-equiv="Content-Type
+	" content="text/html\; charset=iso-2022-jp">\n</head>\n<body>\n<div class=
+	"elementToProof" style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MS
+	FontService\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color:
+	rgb(0\, 0\, 0)\;">\nテスト前\,テスト後</div>\n<div class="elementT
+	oProof" style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontServi
+	ce\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0
+	\, 0)\;">\n2026年5月22日 9時30分-10時00分</div>\n</body>\n</html>\n
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+END:VALARM
+END:VEVENT
+END:VCALENDAR
