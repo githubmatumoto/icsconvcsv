@@ -9,7 +9,7 @@ by 松元隆二
 icsconvcsv.py　動作確認スクリプト tests.sh 解説になります。
 Linux/macOS専用。Windowsでは動作しません。
 
-ディレクトリ ICS/*.ics のサンプルの解説。
+## ディレクトリ ICS/*.ics のサンプルのファイル名について。
 
 ICSファイル名の頭はICSを生成したアプリ名です。
 
@@ -19,8 +19,8 @@ ICSファイル名の頭はICSを生成したアプリ名です。
 
 の略です。
 
-ICSファイルの後ろで、出力範囲の指定。指定ない場合は、詳細をすべて出力
-したファイルです。
+ICSファイル名の後ろで下記は出力範囲の指定。指定ない場合は、詳細をすべ
+て出力したファイルです。
 
 Outlook(Web):
  - 自分の予定が入っている時間を閲覧可能: *-limit1.ics
@@ -29,14 +29,6 @@ Outlook(Web):
 Outlook(classic):
  - 空き時間情報のみ: *-limit1.ics
  - 詳細情報の一部: *-limit2.ics
-
-ディレクトリ CSV/*.csv は期待している出力です。CSVファイル名の後ろで
-
-- gaはGaroon Format
-- simはSimple Format
-- oucはOutlook Classic Format (不完全な実装)
-
-です。
 
 # 使い方
 
