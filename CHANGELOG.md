@@ -250,7 +250,7 @@ def modify_reference_id_data()
   --enable-file-exist-test
 
 - テスト用に同梱してたdebug.shを廃止。代わりに複雑な動作確認を行う
-  tests.shを同梱。説明についてはREADME.test.md参照ください。
+  tests.shを同梱。説明についてはREADME.tests.md参照ください。
 
 - RDATE命令対応。但しカレンダーソフトがRDATEを滅多に出力しないため、
   テストが不完全と考えています。
