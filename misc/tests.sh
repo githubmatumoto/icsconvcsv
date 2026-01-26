@@ -157,6 +157,48 @@ if [ $SILENT == "off" ]; then
     echo "テストに失敗時のみ詳細がでます。"
 fi
 
+############################################################
+
+which ${PYTHON} >& /dev/null
+
+retval=$?
+
+if [ $retval -ne 0 ] ; then
+    echo "ERROR: コマンド " ${PYTHON} " がインストールされていません。"
+    exit
+fi
+
+(echo "import zoneinfo"; echo "import vobject") | ${PYTHON}
+
+retval=$?
+
+if [ $retval -ne 0 ] ; then
+    echo "ERROR: ライブラリの読み込みに失敗しました。"
+    exit
+fi
+
+
+if [ ! -f ${PROGNAME} ]; then
+    echo "ERROR: ファイル" ${PROGNAME} "が存在しません。"
+    exit
+fi
+
+if [ ! -f ${PROG_NORMAL} ]; then
+    echo "ERROR: ファイル" ${PROG_NORMAL} "が存在しません。"
+    exit
+fi
+
+which nkf >& /dev/null
+
+retval=$?
+
+if [ $retval -ne 0 ] ; then
+    echo "ERROR: コマンド nkf がインストールされていません。"
+    exit
+fi
+
+############################################################
+
 ERROR_TAIOU=stop
 echo
 echo "MEMO: EXDATEの書式の問題で例外を送出するバグフイックス"
@@ -259,7 +301,7 @@ cmp_ics "-Fgaroon -Cutf-8 --disable-split-summary all" "ga13" "ou13-dis-sum"
 ERROR_TAIOU=stop
 
 echo
-echo "MEMO: 時刻の表示の確認(day-fomart)"
+echo "MEMO: 時刻の表示の確認(day-format)"
 
 function ics_day_format() {
     opt=$1
