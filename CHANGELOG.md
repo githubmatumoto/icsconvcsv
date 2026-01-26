@@ -180,7 +180,7 @@ def modify_reference_id_data()
   旧:flag_matumoto_modify
 
   新: flag_split_summary_enhance
-  具体的な追加項目を今まで関数内にハードコーディングしてたが、isc2gacsv.pyで
+  具体的な追加項目を今まで関数内にハードコーディングしてたが、ics2gacsv.pyで
   下記変数に代入する形に修正
   G_SPLIT_SUMMARY_ENHANCE
 ```
@@ -204,6 +204,8 @@ def modify_reference_id_data()
   v2.1以前の修正についても該当する関数が現存しない場合があります。
 
 - 関数名で時刻情報のnaiveをnativeと誤記してたので修正。
+
+- 多数の文章でICSをISCと誤記してたので修正。
 
 - 引数解析関数を独立させ(PreSetup.parse_args())ライブラリ側に統合。引
   数を解説するヘルプの文章もライブラリ側に統合。

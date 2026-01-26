@@ -22,7 +22,7 @@ by 松元隆二
 - <https://github.com/githubmatumoto/icsconvcsv/releases/>
 
 ソフトウエアを展開したフォルダを覚えておいてください。ファイル
-「INSTALL.txt」や「iscconvcsv.py」が含まれるフォルダです。
+「INSTALL.txt」や「icsconvcsv.py」が含まれるフォルダです。
 
 # 確認環境
 

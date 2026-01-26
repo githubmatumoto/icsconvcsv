@@ -37,7 +37,7 @@ Apache License 2.0
 
 __doc__ = """ICS to CSV コンバータ ライブラリ
 
-ICS to CSV コンバータ iscconvcsv.py が利用するライブラリ。
+ICS to CSV コンバータ icsconvcsv.py が利用するライブラリ。
 """
 #######################################
 __doc__ += HELP_LICENSE
