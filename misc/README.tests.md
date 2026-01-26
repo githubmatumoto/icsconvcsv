@@ -1,12 +1,12 @@
-# icsconvcsv.py　動作確認スクリプト test.sh 解説
+# icsconvcsv.py　動作確認スクリプト tests.sh 解説
 
 by 松元隆二
 
 初版公開 2026-1-22
 
-最終更新:2026-1-23
+最終更新:2026-1-26
 
-icsconvcsv.py　動作確認スクリプト test.sh 解説になります。
+icsconvcsv.py　動作確認スクリプト tests.sh 解説になります。
 Linux/macOS専用。Windowsでは動作しません。
 
 ディレクトリ ICS/*.ics のサンプルの解説。
@@ -38,14 +38,19 @@ Outlook(classic):
 
 です。
 
-スクリプト
+# 使い方
+
+コマンドnkfを内部で使っています。未インストールなら導入してください。
+
+icsconvcsvの設定などを実施したあと、以下のコマンドを実行してください。
+
 ```:bash
-bash tests.sh
+% bash tests.sh
 ```
 
-でまとめて確認を行います。検査内容が「MEMO:文章」で表示されます。失敗
-した場合のみ差分が表いされますが、失敗した場合でも、「MEMO:失敗で正常」
-と記載ある場合は問題ありません。
+検査内容が「MEMO:文章」で表示されます。失敗した場合のみ差分が表いされ
+ますが、失敗した場合でも、「MEMO:失敗で正常」と記載ある場合は問題あり
+ません。
 
 すべて正常に終わった場合は「正常終了しました。」と表示されます。
 
@@ -77,7 +82,7 @@ X-OWNER;CN="Fukuoka Taro":mailto:fukuoka.taro@example.jp
 「佐賀太郎/saga.taro@example.jp」
 等にする
 
-## 0.2: スクリプトtest.shでテストが行われないオプション
+## 0.2: スクリプトtests.shでテストが行われないオプション
 オプション「--enable-file-exist-test」のテストは行ってません。
 
 このオプションは出力先のCSVファイルがすでに存在する場合は、上書きの確
@@ -211,7 +216,8 @@ component.dtend.value = TZ.native2aware(dtend)
 ## 1.3: ou2.ics, ouc2.ics, ga2.ics
 Garoonが生成するICSファイルで、ESCが適切に行われない例。
 
-ICSの仕様で文章中の「,」と「;」はバックスラッシュでエスケープする必要あります。
+ICSの仕様で文章中の「,」と「;」はバックスラッシュでエスケープする必要
+ありますがGaroonはエスケープを行いません。
 
 icsconvcsv.pyでは特に対応はしてないため、差分として現れる。
 
