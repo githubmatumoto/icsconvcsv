@@ -52,7 +52,7 @@ CharSet = Enum('CharSet', [('utf_8', 'utf_8'),\
                            ('shift_jis', 'shift_jis'),\
                            ('utf_8_sig', 'utf_8_sig')])
 
-# 終日日程の書式指定
+# 終日スケジュールの日付の書式指定
 AllDayFormat = Enum('AllDayFormat', \
                     [("addtime", "addtime"), ("today", "today"), ("nextday", "nextday"),\
                      ('todayremtime', 'todayremtime'), ('nextdayremtime', 'nextdayremtime')])
@@ -862,7 +862,7 @@ class PreSetup:
         if not override_encoding is None:
             F.CSV_ENCODING = override_encoding
 
-        # 終日日程を上書きする。
+        # 終日スケジュールの日付の書式指定を上書きする。
         if not override_all_day_format is None:
             F.CSV_ALLDAY_FORMAT = override_all_day_format
 

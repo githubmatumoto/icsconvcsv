@@ -185,8 +185,8 @@ def modify_reference_id_data()
   G_SPLIT_SUMMARY_ENHANCE
 ```
 
-## 2026-1-23: Version:3.0
-(内部メモ:subversion revision xxxx, フォルダv3.0)
+## 2026-1-26: Version:3.0beta1
+(内部メモ:subversion revision 2193, フォルダv3.0)
 
 - ソフトウエア名をics2gacsvからicsconvcsvに変更。 ソフトウエア名に商標
 であるCybozu Garoonの一部である「ga」が含まれていたため。
@@ -284,8 +284,4 @@ DESCRIPTIONに最初から上記が入って場合は誤動作する。
 
 > ModCSV.enhanced_gyoumunum()
 
-- 繰り返し命令でRDATEは生成される環境がないため未対応としていたが、
-  Windowsアプリ版 Outlook(classic)で生成したICSファイルで一部条件でICS
-  のRDATE命令が使われるようです。RDATEが生成されたICSファイルは変換で
-  きません。把握した範囲では、ICSファイル出力時の詳細情報の設定で「詳
-  細情報の一部」を選んだ時に生成される事があります。 (2025-12-25追記)
+- RDATEに対応はしたが、動作確認例が少ないため、要注意。
