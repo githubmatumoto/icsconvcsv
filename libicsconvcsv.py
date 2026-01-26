@@ -86,7 +86,7 @@ class ConstDat:
     # ヘッダ分割の拡張のデフォルト
     SPLIT_SUMMAEY_EXTEND_HEAD_GENERIC = "TODO,MEMO,授業,講義,実験,移動,TEST"
 
-    BAD_CHAR=['\\', '/', '[', ']', '<', '>', '?', '"', "'", "*", '-', '@', '{', '}']
+    BAD_CHAR = ['\\', '/', '[', ']', '<', '>', '?', '"', "'", "*", '-', '@', '{', '}']
     #ヘッダ分割時に問題になりそうな文字をヘッダとして拒否する
     # 「,」と「:」も使えないけど、セパレータなので除外。
     SPLIT_SUMMARY_HEAD_BAD_CHAR = BAD_CHAR
@@ -113,7 +113,7 @@ class FeatureFlags:
         # 入力ファイルの日付確認、古いファイルへの警告を行うかいなか。
         # False:  日付確認を行わない。
         # True: 日付確認を行う
-        self.old_file_check =False
+        self.old_file_check = False
         # 出力ファイルがすでに存在する場合、上書きするかの確認をするかしないか。
         # False: 上書き確認を行う
         # True: 上書き確認を行わない。
@@ -577,7 +577,7 @@ class TZ:
         raise ValueError("ERROR: ここには来ないはずだが。。")
 
     @staticmethod
-    def guess(exit_error:bool = True):
+    def guess(exit_error: bool = True):
         """
         TimeZoneを推測する。事前にinit_guess_timezone()で初期化する必要あり。
 
@@ -609,7 +609,7 @@ class TZ:
     # TimeZoneの変換関係の関数。
     ###
     @staticmethod
-    def naive2aware(d, exit_error:bool = True) -> datetime.datetime:
+    def naive2aware(d, exit_error: bool = True) -> datetime.datetime:
         """
         RFC5545ではfloating timeという概念があるdatetimeのnaive timeとほぼ同等。
 
@@ -1123,12 +1123,12 @@ class PreSetup:
                 F.naive_aware_mixed_bugfix = False
             elif o == "--DEBUG-UID":
                 F.DEBUG_UID = a
-            elif o == "--enable-file-exist-test": # 未確認
+            elif o == "--enable-file-exist-test":
                 # 引数の指定順序依存あり。
                 # 出力ファイルの上書き確認/入力ファイルの日付確認を行なう。
                 F.overwrite = False
                 F.old_file_check = True
-            elif o in ("-W", "--disable-file-exist-test"): # 未確認
+            elif o in ("-W", "--disable-file-exist-test"):
                 # 引数の指定順序依存あり。
                 # 出力ファイルの上書き確認/入力ファイルの日付確認を行わない
                 F.overwrite = True
@@ -2639,7 +2639,7 @@ def ics2csv(flag: FeatureFlags, ics_file_path: str, csv_file_path: str, timerang
 
 def guess_timerange(TIMERANGE: str, INPUT_ICS_FILENAME: str, OUTPUT_CSV_FILENAME: str) -> int:
     """
-        CSVが出力する期間の値を推測します。
+        ICSやCSVのファイル名よりCSVが出力する期間の値を推測します。
 
         引数:
         TIMERANGE:str

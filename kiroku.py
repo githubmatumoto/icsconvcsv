@@ -13,9 +13,9 @@ import libicsconvcsv
 
 # 入力ファイル名
 #Outlook(Web)が生成するICSファイルの出力名
-__INPUT_ICS_FILENAME="calendar.ics"
+__INPUT_ICS_FILENAME = "calendar.ics"
 
-__doc__=f"""ICS(iCalendar)をCSVに変換。作者の職場の業務記録提出用。
+__doc__ = f"""ICS(iCalendar)をCSVに変換。作者の職場の業務記録提出用。
 
 SYNOPSIS:
 
@@ -94,7 +94,7 @@ $ cd "ソフトウエアを展開したフォルダ"
 ※作者の職場の業務記録提出用のため頻繁に仕様が変更になります。
 """
 
-__doc__+=libicsconvcsv.HELP_LICENSE
+__doc__ += libicsconvcsv.HELP_LICENSE
 
 ########################################
 
@@ -104,12 +104,12 @@ def __myhelp(fname):
 
 if __name__ == '__main__':
     if libicsconvcsv.VERSION != "3.0":
-        print("ERROR: ファイルが古いです。最新のicsconvcsv.pyとlibicsconvcsv.pyをダウンロードしてください。",file=sys.stderr)
+        print("ERROR: ファイルが古いです。最新のkiroku.pyとlibicsconvcsv.pyをダウンロードしてください。", file=sys.stderr)
         sys.exit(1)
 
     #####################################################################
     # key: 出力期間, value:出力ファイル名
-    csv_fname_list  = {}
+    csv_fname_list = {}
 
     #####################################################################
     # 引数解析
@@ -119,24 +119,24 @@ if __name__ == '__main__':
     # 許可する引数。
     short_opt = 'hWzkm'
     long_opt = ["format-garoon"]
-    long_opt += ["help" ,"enable-file-exist-test", "add-summary-head="]
+    long_opt += ["help", "enable-file-exist-test", "add-summary-head="]
 
     # ライブラリの挙動変更。
 
-    # Garoon Format指定
-    ext_argv=['--format-garoon']
+    # CSV出力はGaroon Format指定
+    ext_argv = ['--format-garoon']
     # 拡張業務番号を指定。
-    ext_argv+=['-z']
+    ext_argv += ['-z']
     # CSVの１行めに項目(CSVヘッダ)を出力
-    ext_argv+=['-k']
+    ext_argv += ['-k']
     # SUMMARYヘッダ拡張。
-    ext_argv+=['-m']
+    ext_argv += ['-m']
 
     # 煩雑なファイル存在確認を停止したい場合は以下をコメントアウト
-    ext_argv+=['--enable-file-exist-test']
+    ext_argv += ['--enable-file-exist-test']
     #
-    # SUMMARYヘッダ拡張を行いたい場合は下記のような形で追記ください。
-    # ext_argv+=['--add-summary-head=研究,教育']
+    # SUMMARYヘッダに独自の拡張を行いたい場合は下記のような形で追記ください。
+    # ext_argv += ['--add-summary-head=研究,教育']
 
     flag = None
 
@@ -161,7 +161,7 @@ if __name__ == '__main__':
             if i in libicsconvcsv.ConstDat.FNAME_BAD_CHAR:
                 raise ValueError(f"ERROR: 引数Nameにファイル名として使えない記号「{i}」が含まれます。")
     except ValueError as e:
-        print("ERROR: ", e,  file=sys.stderr)
+        print("ERROR: ", e, file=sys.stderr)
         print("ERROR:  引数 -h でヘルプが表示されます。", file=sys.stderr)
         sys.exit(1)
 

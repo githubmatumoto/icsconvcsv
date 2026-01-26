@@ -10,7 +10,7 @@ import sys
 import re
 import libicsconvcsv
 
-__doc__=f"""ICS(iCalendar)をCSVに変換。CSVの出力形式はGaroonとほぼ同じ。
+__doc__ = f"""ICS(iCalendar)をCSVに変換。CSVの出力形式はGaroonとほぼ同じ。
 
 使用方法:
    $ python3 {sys.argv[0]} [-hsmz] 期間 入力.ics 出力.csv
@@ -21,9 +21,9 @@ __doc__=f"""ICS(iCalendar)をCSVに変換。CSVの出力形式はGaroonとほぼ
    $ python3 {sys.argv[0]} all calendar.ics schedules-all.csv
 """
 
-__doc__+=libicsconvcsv.HELP_PART1
+__doc__ += libicsconvcsv.HELP_PART1
 
-__doc__+="""
+__doc__ += """
 =====================================================================
 注意事項:
    ※過去に公開していたics2gacsvの互換コマンドになります。
@@ -36,7 +36,7 @@ __doc__+="""
 
 以上です。
 """
-__doc__+=libicsconvcsv.HELP_LICENSE
+__doc__ += libicsconvcsv.HELP_LICENSE
 
 
 ########################################
@@ -47,11 +47,11 @@ def __myhelp(fname):
 
 if __name__ == '__main__':
     if libicsconvcsv.VERSION != "3.0":
-        print("ERROR: ファイルが古いです。最新のicsconvcsv.pyとlibicsconvcsv.pyをダウンロードしてください。",file=sys.stderr)
+        print("ERROR: ファイルが古いです。最新のics2gacsv.pyとlibicsconvcsv.pyをダウンロードしてください。", file=sys.stderr)
         sys.exit(1)
 
     #CSVを出力する期間指定。
-    timerange=0
+    timerange = 0
 
     exec_filename = os.path.basename(__file__)
     exec_filename = re.sub(r'\.py$', "", exec_filename)
@@ -61,7 +61,7 @@ if __name__ == '__main__':
     long_opt = ["help", "format-garoon", "disable-split-summary",\
                 "extend-summary-head", "add-summary-head=",\
                 "enhance-gyoumunum", "enhance-gyoumu-number",\
-                "print-csv-header","DEBUG-UID="]
+                "print-csv-header", "DEBUG-UID="]
 
     # ライブラリの挙動変更。
     ext_argv = ['--format-garoon']
@@ -76,13 +76,13 @@ if __name__ == '__main__':
             __myhelp(exec_filename)
 
         timerange = argv[0]
-        input_ics_filename=argv[1]
-        output_csv_filename=argv[2]
+        input_ics_filename = argv[1]
+        output_csv_filename = argv[2]
 
         timerange = libicsconvcsv.guess_timerange(timerange, input_ics_filename, output_csv_filename)
 
     except ValueError as e:
-        print("ERROR: ", e,  file=sys.stderr)
+        print("ERROR: ", e, file=sys.stderr)
         print("ERROR:  引数 -h でヘルプが表示されます。", file=sys.stderr)
         sys.exit(1)
 
