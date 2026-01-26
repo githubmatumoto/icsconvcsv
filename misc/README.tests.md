@@ -7,6 +7,7 @@ by 松元隆二
 最終更新:2026-1-23
 
 icsconvcsv.py　動作確認スクリプト test.sh 解説になります。
+Linux/macOS専用。Windowsでは動作しません。
 
 ディレクトリ ICS/*.ics のサンプルの解説。
 
@@ -39,11 +40,12 @@ Outlook(classic):
 
 スクリプト
 ```:bash
-sh tests.sh
+bash tests.sh
 ```
 
-でまとめて比較を行います。多数のチェックが走りますが、失敗した場合でも、
-「MEMO:失敗で正常」と記載ある場合は問題ありません。
+でまとめて確認を行います。検査内容が「MEMO:文章」で表示されます。失敗
+した場合のみ差分が表いされますが、失敗した場合でも、「MEMO:失敗で正常」
+と記載ある場合は問題ありません。
 
 すべて正常に終わった場合は「正常終了しました。」と表示されます。
 
@@ -97,8 +99,8 @@ touchコマンドでファイルの日付を新しくする。出力先のCSV「
 2回実行して、2回目に上書きするか確認してくるかを調べる。
 
 ```:text
-% python icsconvcsv.py --enable-file-exist-test all calendar.ics tmp.csv
-% python icsconvcsv.py --enable-file-exist-test all calendar.ics tmp.csv
+% python3 icsconvcsv.py --enable-file-exist-test all calendar.ics tmp.csv
+% python3 icsconvcsv.py --enable-file-exist-test all calendar.ics tmp.csv
 ```
 
 このような感じの質問があります。Yesと答えてください。
@@ -118,7 +120,7 @@ WARNING: [Y]es/[N]o? >>
 コマンドを実行し、
 
 ```:text
-% python icsconvcsv.py --enable-file-exist-test all calendar.ics tmp.csv
+% python3 icsconvcsv.py --enable-file-exist-test all calendar.ics tmp.csv
 ```
 以下のエラーになるか確認する
 ```:text
@@ -133,8 +135,9 @@ ERROR: 最新の場合はファイル名が間違えてないか確認くださ�
 本節のサンプルはバグ対策を行ってる例になります。
 
 # 1.1: ga1.ics
+EXDATEの書式の問題で例外を送出するバグ
 
-入力例:　
+入力例:
 
 ```text:
 時間指定なしの繰り返しスケジュール
@@ -170,6 +173,7 @@ EXDATE:20251215T000000
 ```
 
 ## 1.2: ou1.ics
+日付情報でnaiveとawareが混在するバグ
 
 出力CSV: ou1.csv
 
@@ -193,8 +197,8 @@ EXDATE;TZID=Tokyo Standard Time:20260720T000000
    -> 発生箇所: component.getrruleset(addRDate=True)
 ```
 
-上記のエラーはDTSTART/DTENDにTimeZone情報が無いが、EXDATEデータには
-TIMEZONEがあるため、比較できない。
+上記のエラーはDTSTART/DTENDにTimeZone情報が無い(naive)が、EXDATEデータには
+TIMEZONEがある(aware)ため、比較できない。
 
 本件はOutlook(Web)のバグと考えている。TimeZoneデータがあり、TZ.guess()
 がTZを返す場合のみ、以下の修正を行う。関数 Main.ics2csv() 参照
@@ -205,10 +209,11 @@ component.dtend.value = TZ.native2aware(dtend)
 ```
 
 ## 1.3: ou2.ics, ouc2.ics, ga2.ics
+Garoonが生成するICSファイルで、ESCが適切に行われない例。
 
-Garoonの記号Escバグ例。Garoonが生成するICSVでは記号のESCが適切に行われ
-ない例がある。icsconvcsv.pyでは特に対応はしてないため、差分として現れ
-る。
+ICSの仕様で文章中の「,」と「;」はバックスラッシュでエスケープする必要あります。
+
+icsconvcsv.pyでは特に対応はしてないため、差分として現れる。
 
 CSVはou2.csvのみ。
 
@@ -489,7 +494,7 @@ Outlook(Web, classic)および出力制限。
 
 -TEST:79:拡張業務番号(別記法/行頭全角空白)g9611
 -----------
-　
+
 可
 行頭全角空白1文字
 2025年12月27日 15時00分-15時30分

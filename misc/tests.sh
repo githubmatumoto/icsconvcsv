@@ -36,6 +36,10 @@ PROG_NORMAL=./normal_csv.py
 # 無指定もしくは-aなら全部
 PRINT_LINE=
 
+#on: 煩雑なログをだす。
+#off: エラー時のみログをだす。
+SILENT=on
+
 function cmp_ics() {
     ARGS=$1
     ICS=ICS/$2."ics"
@@ -70,11 +74,17 @@ function cmp_ics() {
        rm ${TMPLOG}
     fi
 
-    echo "CHECK: > ${PYTHON} ${PROGNAME} ${ARGS} ${ICS} ${TMP1CSV}"
+    if [ $SILENT == "off" ]; then
+	echo -n "CHECK: > ${PYTHON} ${PROGNAME} ${ARGS} ${ICS} ${TMP1CSV}"
+    fi
     ${PYTHON} ${PROGNAME} ${ARGS} ${ICS} ${TMP1CSV} 2> ${TMPLOG}
     retval=$?
 
     if [ $retval -ne 0 ] ; then
+	if [ $SILENT == "on" ]; then
+	    echo -n "CHECK: > ${PYTHON} ${PROGNAME} ${ARGS} ${ICS} ${TMP1CSV}"
+	fi
+
 	echo 'ERROR: 失敗しました(終了ステータス異常)。'
 	echo "-- ERROR LOG --------------------------"
 	cat -n ${TMPLOG} | tail
@@ -101,16 +111,16 @@ function cmp_ics() {
     if [ $NKF = "on" ];then
 	# 自動判断はさせず、入力SJIS、出力UTF-8固定。
 	#echo "CONV: > nkf -S -w < ${TMP1CSV} > ${TMP2CSV}"
-	echo "CHECK: USE NKF"
+	#echo "CHECK: USE NKF"
 	nkf -S -w < ${TMP1CSV} > ${TMP2CSV}
 	rm ${TMP1CSV}
 	mv ${TMP2CSV} ${TMP1CSV}
     fi
 
-    echo "CHECK: > diff -u ${TMP1CSV} ${CSV}"
+    #echo "CHECK: > diff -u ${TMP1CSV} ${CSV}"
 
     if [ $NORMAL = "on" ]; then
-	echo "CHECK: USE NORMALIZE_CSV"
+	#echo "CHECK: USE NORMALIZE_CSV"
 	${PYTHON} ${PROG_NORMAL} ${PRINT_LINE} < ${TMP1CSV} > ${TMP2CSV}
 	rm ${TMP1CSV}
 	mv ${TMP2CSV} ${TMP1CSV}
@@ -124,6 +134,7 @@ function cmp_ics() {
     fi
 
     if [ $retval -ne 0 ] ; then
+	echo "CHECK: > diff -u ${TMP1CSV} ${CSV}"
 	echo 'ERROR: 失敗しました(差分あり。差分は冒頭10行のみ)'
 	echo "-- ERROR LOG --------------------------"
 	cat -n ${TMPLOG} | head
@@ -135,37 +146,46 @@ function cmp_ics() {
 	return
     fi
 
-    echo "CHECK: 成功しました"
+    if [ $SILENT == "off" ]; then
+	echo ": SUCCESS "
+    fi
 }
+
+echo "ライブラリicsconvcsvの一括テストスクリプト。「MEMO:失敗で正常」とある場合は無視して問題ありません。"
+
+if [ $SILENT == "off" ]; then
+    echo "テストに失敗時のみ詳細がでます。"
+fi
 
 ERROR_TAIOU=stop
 echo
-echo "MEMO: Garoonの生成するEXDATEのバグフイックス"
+echo "MEMO: EXDATEの書式の問題で例外を送出するバグフイックス"
 cmp_ics "all" "ga1"
 
 ERROR_TAIOU=continue
 echo
-echo "MEMO: 失敗で正常: Garoonの生成するEXDATEのバグフイックスを無効化。"
+echo "MEMO: 失敗で正常: EXDATEの書式の問題で例外を送出するバグフイックスを無効化。"
 cmp_ics "--disable-exdate-format-bugfix all" "ga1"
 ERROR_TAIOU=stop
 
 echo
-echo "MEMO: Outlook(web)のuntil+EXDATEバグ"
+echo "MEMO: 日付情報でnaiveとawareが混在するバグフイックス"
 cmp_ics "all" "ou1"
 
 ERROR_TAIOU=continue
 echo
-echo "MEMO: 失敗で正常: Outlook(web)のuntil+EXDATEバグフイックスを無効化。"
+echo "MEMO: 失敗で正常: 日付情報でnaiveとawareが混在するバグフイックスを無効化。"
 cmp_ics "--disable-naive-aware-mixed-bugfix all" "ou1"
 ERROR_TAIOU=stop
 
 echo
-echo "MEMO: 記号(,と;)ありの時のGaroonのバグ。ou2/ou2cは成功。"
+echo "MEMO: Garoonが生成するICSファイルで、ESCが適切に行われない例。"
+echo "MEMO: 記号(,と;)の適切なエスケープが行わない。Outlookは成功。"
 cmp_ics "-FGaroon -Cutf-8 all" "ou2"
 cmp_ics "-FGaroon -Cutf-8 all" "ouc2" "ou2"
 ERROR_TAIOU=continue
 echo
-echo "MEMO: 失敗で正常: 記号(,と;)ありの時のGaroonバグ。"
+echo "MEMO: 失敗で正常: garoonのみ失敗する"
 cmp_ics "-FGaroon -Cutf-8 all" "ga2" "ou2"
 ERROR_TAIOU=stop
 
@@ -223,7 +243,7 @@ cmp_ics "-Fgaroon -Cutf-8 -m all" "ouc13" "ou13"
 
 ERROR_TAIOU=continue
 echo
-echo "MEMO: 失敗で正常: TEST:84のみ差分がでる。Garoonの(,)のバグ"
+echo "MEMO: 失敗で正常: TEST:84のみ差分がでる。Garoonの記号(,と;)の適切なエスケープが行わないのバグ"
 cmp_ics "-Fgaroon -Cutf-8 -m all" "ga13" "ou13"
 ERROR_TAIOU=stop
 
@@ -234,7 +254,7 @@ cmp_ics "-Fgaroon -Cutf-8 --disable-split-summary all" "ouc13" "ou13-dis-sum"
 
 ERROR_TAIOU=continue
 echo
-echo "MEMO: 失敗で正常: TEST:84のみ差分がでる。Garoonの(,)のバグ"
+echo "MEMO: 失敗で正常: TEST:84のみ差分がでる。Garoonの記号(,と;)の適切なエスケープが行わないのバグ"
 cmp_ics "-Fgaroon -Cutf-8 --disable-split-summary all" "ga13" "ou13-dis-sum"
 ERROR_TAIOU=stop
 
