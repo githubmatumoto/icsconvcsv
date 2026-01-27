@@ -873,6 +873,16 @@ class PreSetup:
         # 「：」が入ってるのは特殊な値。
         # CSVのlistの実際の位置はF.CSV_B_OFFSET+F.CSV_POS[HOGEHOGE]になります。
 
+        # 独自定義のICS要素の追加手順:
+
+        # ICSファイルの要素ABCの中身を加工せずにそのまま出力する場合は
+        #  F.CSV_POS["ABC"]  = CSVの位置
+        # と記載します。何らかの加工をする場合は「:」付きで以下のような感じで記載し
+        #  F.CSV_POS["X:ABC"]  = CSVの位置
+        #  F.CSV_POS["ABC:適当な名前"]  = CSVの位置
+        # 関数Main.ics_parts_to_csv_buffer()にその要素の
+        # 処理方法を記載します。
+
         if F.CSV_FORMAT in (CSVFormat.garoon, CSVFormat.cmpouga):
             h_tail = ["開始日", "開始時刻", "終了日", "終了時刻", "予定", "予定詳細", "メモ"]
             # 「：」が入ってるのは特殊な値。
@@ -1918,6 +1928,19 @@ class Main:
 
        外部制御変数:
         F.remove_tail_cr
+
+        独自定義のICS要素の追加手順:
+
+        ICSファイルの要素ABCの中身を加工せずにそのまま出力する場合は
+        PreSetup.set_format()で
+           F.CSV_POS["ABC"]  = CSVの位置
+        と記載します。
+
+        何らかの加工をする場合は「:」付きで以下のような感じで記載し
+           F.CSV_POS["X:ABC"]  = CSVの位置
+           F.CSV_POS["ABC:適当な名前"]  = CSVの位置
+        以下の関数に処理手順を記載します。
+
     """
         p = F.CSV_POS.copy()
         row = [None] * F.CSV_POS2["B:LENGTH"]
@@ -1933,7 +1956,6 @@ class Main:
 
         if 'X:ALLDAY_EVENT' in F.CSV_POS:
             row[p.pop("X:ALLDAY_EVENT")] = allday
-
 
         # 任意項目とする
         if 'SUMMARY:H' in p:

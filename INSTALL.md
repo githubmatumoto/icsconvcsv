@@ -31,7 +31,7 @@ by 松元隆二
   OS付属Pythonで確認しています。
 
 > $ python3 --version <BR>
-> Python 3.10.12
+> Python 3.12.3
 
   OS設定によりPythonのバージョンが異なる可能性ありますがPython 3.9以上
   なら問題ないかと思います。
