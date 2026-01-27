@@ -107,7 +107,7 @@ class ConstDat:
         {"WORKINGELSEWHERE":0, "TENTATIVE":1, "BUSY":2, "FREE":3, "OOF":4}
 
 class FeatureFlags:
-    """parse_argvなどで後で書き換える変数
+    """parse_argsなどで後で書き換える変数
     小文字は原則Bool型。大文字は原則Bool型以外"""
     def __init__(self):
         # 入力ファイルの日付確認、古いファイルへの警告を行うかいなか。
@@ -132,7 +132,7 @@ class FeatureFlags:
         self.description_delete_4th_line_onwards = False
         # Teamsの会議インフォメーションを消す。パスワードが入ってる。
         self.remove_teams_infomation = True
-        # 業務記録の拡張フォーマットを使うか
+        # 登録番号(業務番号)の拡張フォーマットを使うか
         # True: 使う
         # False: 使わない
         self.enhanced_gyoumunum = False
@@ -873,6 +873,16 @@ class PreSetup:
         # 「：」が入ってるのは特殊な値。
         # CSVのlistの実際の位置はF.CSV_B_OFFSET+F.CSV_POS[HOGEHOGE]になります。
 
+        # 独自定義のICS要素の追加手順:
+
+        # ICSファイルの要素ABCの中身を加工せずにそのまま出力する場合は
+        #  F.CSV_POS["ABC"]  = CSVの位置
+        # と記載します。何らかの加工をする場合は「:」付きで以下のような感じで記載し
+        #  F.CSV_POS["X:ABC"]  = CSVの位置
+        #  F.CSV_POS["ABC:適当な名前"]  = CSVの位置
+        # 関数Main.ics_parts_to_csv_buffer()にその要素の
+        # 処理方法を記載します。
+
         if F.CSV_FORMAT in (CSVFormat.garoon, CSVFormat.cmpouga):
             h_tail = ["開始日", "開始時刻", "終了日", "終了時刻", "予定", "予定詳細", "メモ"]
             # 「：」が入ってるのは特殊な値。
@@ -1015,6 +1025,7 @@ class PreSetup:
         #
         short_opt += "z"
         long_opt += ["enhance-gyoumunum", "enhance-gyoumu-number"]
+        long_opt += ["enhance-tourokunum", "enhance-touroku-number"]
         #
         short_opt += "k"
         long_opt += ["print-csv-header"]
@@ -1084,7 +1095,8 @@ class PreSetup:
                 ModCSV.set_summary_extend_head("おそらくバグ:")
             elif o == "--add-summary-head":
                 ModCSV.set_summary_extend_head("引数--add-summary-headに", a)
-            elif o in ("-z", "--enhance-gyoumunum", "--enhance-gyoumu-number"):
+            elif o in ("-z", "--enhance-gyoumunum", "--enhance-gyoumu-number",\
+                       "--enhance-tourokunum", "--enhance-touroku-number"):
                 F.enhanced_gyoumunum = True
             elif o in ("-k", "--print-csv-header"):
                 F.print_csv_header = True
@@ -1507,11 +1519,11 @@ class ModCSV:
         return description
 
     ###
-    # 業務番号記入の拡張仕様
+    # 登録番号記入の拡張仕様
     @staticmethod
     def enhanced_gyoumunum(description: str, summary: str) -> str:
         """Summary分割で、Summaryの最後尾に「-数字」もしくは「g数字」があった場合は、
-        業務番号と見なし、DESCRIPTIONと置き換える。
+        登録番号と見なし、DESCRIPTIONと置き換える。
 
         ※仕様検討中。
 
@@ -1520,12 +1532,12 @@ class ModCSV:
         は好ましくない。
 
         しかしながら、メモ欄にはTeams会議のパスワードなどセキュリティ情報がか
-        かれる可能性があり、業務番号の摘出のためとはいえ、不必要に見える状
+        かれる可能性があり、登録番号の摘出のためとはいえ、不必要に見える状
         態にするのは好ましくない。
 
     　　そのため、目立たない形で、タイトルの最後尾に記載する案とした。
 
-        業務番号のための区切り文字の検討
+        登録番号のための区切り文字の検討
 
         「&」「#」はxml生成時に別の意味が出るので不可
         「:」はGaroon形式に変換するときの「会議」「出張」とかの区切りと区別出来ないので不可
@@ -1542,7 +1554,7 @@ class ModCSV:
              誤用が無いとは言いきれないが。
 
         Known bugs:
-        業務番号を4桁の数字としている。5桁以上なら要修正
+        登録番号を4桁の数字としている。5桁以上なら要修正
 
 
         デバグコード:
@@ -1551,28 +1563,28 @@ class ModCSV:
         処理の流れ:
 
         1 Summary: 文字列
-          Summaryに業務番号がなければ、Descriptionは一切さわらない。無変。
+          Summaryに登録番号がなければ、Descriptionは一切さわらない。無変。
 
         2. Summary: abcd %数字A or
            Summary: abcd g数字A
 
-        SUMMARYに業務番号があった場合は、SUMMARY側が優先されて、
+        SUMMARYに登録番号があった場合は、SUMMARY側が優先されて、
         DESCRIPTIONの変換を行う。
 
         Description 変換規則
          方針1:行数の変化は可能な限り避ける。
-         方針2:1行めにある業務番号とSUMMARYの業務番号が異なれば置き換える。
-         方針3:1行めに空行があれば業務番号と置き換える。
-         方針4:1行目に業務番号と空行以外がある場合は、行数を増やす。
-         方針5:1行めに「可」「急」があれば、先頭に空行を1行追加して、1行めに業務番号を書き込む
-         方針6:1行めに「可」「急」以外があれば、先頭に空行2行追加して、1行めに業務番号を書き込む
+         方針2:1行めにある登録番号とSUMMARYの登録番号が異なれば置き換える。
+         方針3:1行めに空行があれば登録番号と置き換える。
+         方針4:1行目に登録番号と空行以外がある場合は、行数を増やす。
+         方針5:1行めに「可」「急」があれば、先頭に空行を1行追加して、1行めに登録番号を書き込む
+         方針6:1行めに「可」「急」以外があれば、先頭に空行2行追加して、1行めに登録番号を書き込む
 
 
         以下
          Pre: DESCRIPTION変換前
          Aft: DESCRIPTION変換後
-         数字A: SUMMARYに記載があった業務番号
-         数字B: DESCRIPTIONに記載があった業務番号
+         数字A: SUMMARYに記載があった登録番号
+         数字B: DESCRIPTIONに記載があった登録番号
 
         "(N/A)": CHANGELOG.mdにも記載したが、DESCRIPTIONが未定義という事をしめす
              特殊な文字。改行のみがあった場合は未定義ではなく""が入る。
@@ -1647,7 +1659,7 @@ class ModCSV:
         -------------
 
         """
-        # 業務番号記入の拡張仕様: SUMMARYの「g」と「%」
+        # 登録番号記入の拡張仕様: SUMMARYの「g」と「%」
         m = re.search(r"[ｇg%％]([0-9０-９]{1,4})[　 \t]*$", summary)
         if m is None:
             return None
@@ -1657,9 +1669,9 @@ class ModCSV:
         gyoumunum = str(int(m.groups()[0])+0)
 
         if (int(gyoumunum) < 0) or (int(gyoumunum) > 9999):
-            # 負の数は業務番号としては無効
-            # 5桁の業務番号は無効(正規表現的にないはずだが。)
-            raise RuntimeError("ERROR: Summaryの業務番号の取得に失敗しました")
+            # 負の数は登録番号としては無効
+            # 5桁の登録番号は無効(正規表現的にないはずだが。)
+            raise RuntimeError("ERROR: Summaryの登録番号の取得に失敗しました")
 
         if re.search(r"\r", description, flags=re.DOTALL):
             raise RuntimeError("ERROR: 改行の正規化が行われてません。「\\n」のみ有効です。")
@@ -1701,7 +1713,7 @@ class ModCSV:
         if m1:
             return re.sub(r"^[　 \t]*", gyoumunum, description)
         # Description-Type4:
-        # 冒頭が「可急」の場合は業務番号を行頭に差し込む。行数が1行増える。
+        # 冒頭が「可急」の場合は登録番号を行頭に差し込む。行数が1行増える。
         lines = description.splitlines()
         m1 = re.search(r"^[　 \t]*[可急][　 \t]*$", lines[0])
         if m1:
@@ -1712,7 +1724,7 @@ class ModCSV:
             return gyoumunum + "\n" + "\n".join(lines) + "\n"
 
         # Description-Type5:
-        #それ以外は業務番号を行頭に差し込み改行を2個差し込む。行数が2行増える。
+        #それ以外は登録番号を行頭に差し込み改行を2個差し込む。行数が2行増える。
         return gyoumunum + "\n\n" + description
     ###
 
@@ -1760,8 +1772,8 @@ class ModCSV:
             description = csv_buffer[i][F.CSV_POS2["DESCRIPTION"]]
             description = ModCSV.modify_description(description)
 
-            # 業務番号記入の拡張仕様
-            # SUMMARYに記載された業務番号をDESCRIPTIONに差し込む。
+            # 登録番号記入の拡張仕様
+            # SUMMARYに記載された登録番号をDESCRIPTIONに差し込む。
             if F.enhanced_gyoumunum:
                 d = ModCSV.enhanced_gyoumunum(description, summary)
                 if d:
@@ -1918,6 +1930,19 @@ class Main:
 
        外部制御変数:
         F.remove_tail_cr
+
+        独自定義のICS要素の追加手順:
+
+        ICSファイルの要素ABCの中身を加工せずにそのまま出力する場合は
+        PreSetup.set_format()で
+           F.CSV_POS["ABC"]  = CSVの位置
+        と記載します。
+
+        何らかの加工をする場合は「:」付きで以下のような感じで記載し
+           F.CSV_POS["X:ABC"]  = CSVの位置
+           F.CSV_POS["ABC:適当な名前"]  = CSVの位置
+        以下の関数に処理手順を記載します。
+
     """
         p = F.CSV_POS.copy()
         row = [None] * F.CSV_POS2["B:LENGTH"]
@@ -1933,7 +1958,6 @@ class Main:
 
         if 'X:ALLDAY_EVENT' in F.CSV_POS:
             row[p.pop("X:ALLDAY_EVENT")] = allday
-
 
         # 任意項目とする
         if 'SUMMARY:H' in p:
@@ -2335,13 +2359,14 @@ ICSのSUMMARYの分割でヘッダを追加します。複数指定できます�
   --add-summary-head="研究,教育" :
   --add-summary-head="支部:本部" :
 
--z, --enhance-gyoumunum, --enhance-gyoumu-number
-SUMMARYの最後尾に「%数字」もしくは「g数字」があった場合は、業務番号と
-見なし、メモ欄(description)に業務番号を書き込む。defaultは無効。
+-z, --enhance-tourokunum, --enhance-touroku-number
+--enhance-gyoumunum, --enhance-gyoumu-number
+SUMMARYの最後尾に「%数字」もしくは「g数字」があった場合は登録番号(業務
+番号)と見なし、メモ欄(description)に登録番号を書き込む。defaultは無効。
 
-メモ欄(description)に最初から業務番号と考えられる数字の記載があっ
-た場合はSUMMARYに記載された業務番号を優先し、メモ欄(description)
-の業務番号を書き換える。
+メモ欄(description)に最初から登録番号と考えられる数字の記載があっ
+た場合はSUMMARYに記載された登録番号を優先し、メモ欄(description)
+の登録番号を書き換える。
 ※v2.1で追加。
 ※仕様検討中。
 ※詳細は関数ModCSV.enhanced_gyoumunum()をみよ。

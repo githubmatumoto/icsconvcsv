@@ -61,6 +61,7 @@ if __name__ == '__main__':
     long_opt = ["help", "format-garoon", "disable-split-summary",\
                 "extend-summary-head", "add-summary-head=",\
                 "enhance-gyoumunum", "enhance-gyoumu-number",\
+                "enhance-tourokunum", "enhance-touroku-number"\
                 "print-csv-header", "DEBUG-UID="]
 
     # ライブラリの挙動変更。
