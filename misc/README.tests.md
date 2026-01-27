@@ -507,7 +507,9 @@ ga11-org.csv: Garoonが生成したCSVをUTF-8にしたもの。
 
 ## 2.3: ou12.ics, ou12-limit2.ics, ouc12.ics, ouc12-limit2.ics
 
-職場の業務記録記載用の拡張業務番号。
+職場の業務記録記載用の拡張登録番号。
+
+※職場内では業務番号が登録番号に変更になってますが、サンプルはそのままです。
 
 Outlook(Web, classic)および出力制限。
 

@@ -277,7 +277,7 @@ NORMAL=off
 ERROR_TAIOU=stop
 
 echo
-echo "MEMO:拡張業務番号"
+echo "MEMO:拡張登録番号"
 cmp_ics "-Fgaroon -Cutf-8 -m -z all" "ou12"
 cmp_ics "-Fgaroon -Cutf-8 -m -z all" "ouc12" "ou12"
 
