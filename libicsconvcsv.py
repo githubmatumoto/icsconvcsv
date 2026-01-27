@@ -1410,6 +1410,10 @@ class ModCSV:
                 raise ValueError(f"ERROR: {mess}使えない記号「{i}」が含まれます。")
         tmp_list = re.split('[,:]', opt)
         tmp_list2 = [item for item in tmp_list if item != '']
+
+        if "Hidden" in tmp_list2:
+                raise ValueError(f"ERROR: {mess}使えない文字列「Hidden」が含まれます。")
+
         F.SPLIT_SUMMARY_EXTEND_HEAD += tmp_list2
     #
     @staticmethod
@@ -2358,6 +2362,9 @@ ICSのSUMMARYの分割でヘッダを追加します。複数指定できます�
 例
   --add-summary-head="研究,教育" :
   --add-summary-head="支部:本部" :
+
+※内部処理の都合で、引数に「Hidden」は指定できません。繰返しスケジュー
+ルの一部上書き(RECURRENCE_ID)で別用途で使っているため。
 
 -z, --enhance-tourokunum, --enhance-touroku-number
 --enhance-gyoumunum, --enhance-gyoumu-number
