@@ -87,7 +87,7 @@ function cmp_ics() {
 
 	echo 'ERROR: 失敗しました(終了ステータス異常)。'
 	echo "-- ERROR LOG --------------------------"
-	cat -n ${TMPLOG} | tail
+	cat -n ${TMPLOG} | tail | fold -w 80
 	echo "---------------------------------------"
 	if [ $ERROR_TAIOU = "stop" ]; then
 	   exit
@@ -117,7 +117,7 @@ function cmp_ics() {
 	mv ${TMP2CSV} ${TMP1CSV}
     fi
 
-    #echo "CHECK: > diff -u ${TMP1CSV} ${CSV}"
+    #echo "CHECK: > diff -u ${TMP1CSV} ${CSV}" | cat -n | fold -w 80
 
     if [ $NORMAL = "on" ]; then
 	#echo "CHECK: USE NORMALIZE_CSV"
@@ -134,10 +134,10 @@ function cmp_ics() {
     fi
 
     if [ $retval -ne 0 ] ; then
-	echo "CHECK: > diff -u ${TMP1CSV} ${CSV}"
-	echo 'ERROR: 失敗しました(差分あり。差分は冒頭10行のみ)'
+	echo "CHECK: > diff -u ${TMP1CSV} ${CSV} | cat -n | fold -w 80"
+	echo 'ERROR: 失敗しました'
 	echo "-- ERROR LOG --------------------------"
-	cat -n ${TMPLOG} | head
+	cat -n ${TMPLOG} | fold -w 80
 	echo "---------------------------------------"
 
 	if [ $ERROR_TAIOU = "stop" ]; then
@@ -242,6 +242,16 @@ cmp_ics "-TUS/Eastern all" "ou3"
 echo
 echo "MEMO: 失敗で正常: TimeZoneを誤指定。7月20日の除外を失敗。7月27日が欠落。"
 cmp_ics "-TUS/Eastern all" "ou1"
+ERROR_TAIOU=stop
+
+echo
+echo "MEMO: 繰返しスケジュール(RRULE)の一部修正(RECURRENCE-ID)を行い、参照元のRRULEを喪失させた例。"
+cmp_ics "all" "ouc4"
+
+ERROR_TAIOU=continue
+echo
+echo "MEMO: 失敗で正常: UIDを修正しているため、一部復元に失敗します"
+cmp_ics "all" "ouc4-baduid" "ouc4"
 ERROR_TAIOU=stop
 
 echo

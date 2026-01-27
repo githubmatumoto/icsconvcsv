@@ -241,7 +241,7 @@ CSVはou2.csvのみ。
 2026年5月22日 14時00分-14時30分
 ```
 
-## 1.4: ou3.icsおよびou1.ics
+## 1.4: ou3.ics, ou1.ics(再掲)
 
 TimeZoneを誤って指定すると、スケジュールの計算にミスをする例。
 
@@ -292,12 +292,102 @@ EXDATEが時刻情報とTimeZoneがあるため、ou3.icsと同等の理由に�
 TimeZoneを誤って引数で指定(-TUS/Eastern)すると、EXDATEの計算をミスし、
 7月20日が除外対象とならない。
 
+## 1.5: ouc4.ics, ouc4-baduid.ics
+
+繰返しスケジュール(RRULE)の一部修正(RECURRENCE-ID)を行い、参照元のRRULEを喪失させた例。
+
+RRULE側のUIDを修正し、参照元を喪失させてます。
+
+- ouc4.ics:UIDが正常な例
+
+- ouc4-baduid.ics:UIDを意図的に壊した例
+
+以下のようなスケジュールを作成すると
+
+```:text
+-TEST:91:7月の火曜繰り返し一部日時修正
+2026年7月7日(火)から2026年7月28日(火)。
+終日スケジュール(時刻なし)
+21日(火)を22日(水)へ修正
+```
+
+```:text
+-TEST:92:7月の火曜繰り返し一部時刻修正
+2026年7月7日(火)から2026年7月28日(火)。
+12:00-13:00
+21日(火)を13:00-14:00へ修正
+```
+
+以下のようなICSファイルが生成されます。(抜粋)
+
+```:text
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20260127T003625Z
+DESCRIPTION:2026年7月7日(火)から2026年7月28日(火)。\n終日ス
+	ケジュール(時刻なし)\n21日(火)を22日(水)へ修正\n
+DTEND;VALUE=DATE:20260708
+DTSTART;VALUE=DATE:20260707
+RRULE:FREQ=WEEKLY;COUNT=4;BYDAY=TU
+SUMMARY;LANGUAGE=ja:TEST:91:7月の火曜繰り返し一部日時修正
+TRANSP:TRANSPARENT
+UID:040000008200E00074C5B7101A82E00800000000D9D2AEF7248FDC01000000000000000
+	010000000FCC24558F542FC4B91C8007AF5E2B4BB
+END:VEVENT
+
+BEGIN:VEVENT
+DTEND;VALUE=DATE:20260723
+DTSTAMP:20260127T003904Z
+DTSTART;VALUE=DATE:20260722
+RECURRENCE-ID;VALUE=DATE:20260721
+UID:040000008200E00074C5B7101A82E00800000000D9D2AEF7248FDC01000000000000000
+	010000000FCC24558F542FC4B91C8007AF5E2B4BB
+END:VEVENT
+```
+
+```:text
+BEGIN:VEVENT
+DESCRIPTION:2026年7月7日(火)から2026年7月28日(火)。\n12:00-13:00
+	\n21日(火)を13:00-14:00へ修正\n
+DTEND;TZID="Tokyo Standard Time":20260707T130000
+DTSTART;TZID="Tokyo Standard Time":20260707T120000
+RRULE:FREQ=WEEKLY;COUNT=4;BYDAY=TU
+SUMMARY;LANGUAGE=ja:TEST:92:7月の火曜繰り返し一部時刻修正
+UID:040000008200E00074C5B7101A82E0080000000023935F20258FDC01000000000000000
+	0100000003426F9DE26794D419A0197EBC7316A5E
+END:VEVENT
+
+BEGIN:VEVENT
+DTEND:20260721T050000Z
+DTSTART:20260721T040000Z
+RECURRENCE-ID:20260721T030000Z
+UID:040000008200E00074C5B7101A82E0080000000023935F20258FDC01000000000000000
+	0100000003426F9DE26794D419A0197EBC7316A5E
+END:VEVENT
+```
+
+繰返しスケジュールRRULEの日付や時刻の修正をすると、RECURRENCE-IDが含ま
+れるVEVENTが生成されます。このVEVENTにはSUMMARYおよびDESCRIPTIONが含ま
+れません。ただしSUMMARYおよびDESCRIPTIONの修正を行った場合は、修正内容
+が含まれます。
+
+そのため、ICSファイルから一部を取り出した時に、RRULEが含まれるVEVENTを
+誤って消すと、RECURRENCE-IDが含まれるVEVENTの復元に失敗します。
+
+本例ではRRULEが含まれるVEBENTのUIDを修正しています。UIDに"BAD"を追加して
+います。そのため、参照元のVEVENTが喪失します。この場合「SUMMARY」が
+"(REFERENCE DATA DOES NOT EXIST)"という表記になります。
+
+コマンドicsconvscvの設計で「SUMMARY」は必須としてますが、「DESCRIPTION」は
+必須としてないため、「DESCRIPTION」は"(N/A)"という表記になります。
+
+また、本来はRECURRENCE-IDで無効になるべきスケジュールがそのまま残ります。
 
 # 2: 各種ICSサンプル(出力確認)
 
 本節のサンプルは期待した出力が行われてるかの確認になります。
 
-## 2.1: ou10.ics / ouc10.ics /　ou10-free.ics / ou10-us.ics
+## 2.1: ou10.ics, ouc10.ics, ou10-free.ics, ou10-us.ics
 
 Outlookで使える属性の調査。Outlookでスケジュールを入力するときに設定可能な
 各種属性のテストになります。
@@ -337,7 +427,7 @@ ou10.csv / ouc10.csv /　ou10-free.csv / ou10-us.csv
 補足: TEST:3xの入力は、ICSに出力されます。 TEST:4xの入力は
 OutlookClassicのICSにのみ出力されます。TEST:5xの入力はICSには出力されません。
 
-## 2.2: ou11.ics / ouc11.ics /　ga11.ics
+## 2.2: ou11.ics, ouc11.ics, ga11.ics
 
 日付をいろいろ複雑に入力した例。
 
