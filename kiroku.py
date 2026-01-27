@@ -125,7 +125,7 @@ if __name__ == '__main__':
 
     # CSV出力はGaroon Format指定
     ext_argv = ['--format-garoon']
-    # 拡張業務番号を指定。
+    # 拡張登録番号を指定。
     ext_argv += ['-z']
     # CSVの１行めに項目(CSVヘッダ)を出力
     ext_argv += ['-k']

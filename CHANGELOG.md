@@ -257,6 +257,16 @@ def modify_reference_id_data()
 - RDATE命令対応。但しカレンダーソフトがRDATEを滅多に出力しないため、
   テストが不完全と考えています。
 
+## 2026-1-27: Version:3.0beta2
+(内部メモ:subversion revision 2195, フォルダv3.0)
+
+- 繰返し命令の処理のサンプル ouc4.ics 追加。
+
+- 職場向け仕様である拡張業務番号を拡張登録番号に改名。職場の用語変更に
+  伴う修正。ただし関数名やサンプルなどは修正していません。
+
+  引数追加。--enhance-tourokunum, --enhance-touroku-number
+
 # Known bugs:
 
 - 西暦を判断する基準の正規表現が「[^\\d]20[\\d]{6}」などになってるので、
@@ -279,7 +289,7 @@ def modify_reference_id_data()
 "(REFERENCE DATA DOES NOT EXIST)"という文字列を使っています。SUMMARYや
 DESCRIPTIONに最初から上記が入って場合は誤動作する。
 
-- 業務番号を暗に4桁と想定している。5桁以上なら下記関数の正規表現を修正
+- 登録番号を暗に4桁と想定している。5桁以上なら下記関数の正規表現を修正
 する。
 
 > ModCSV.enhanced_gyoumunum()
