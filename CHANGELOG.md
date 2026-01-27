@@ -257,8 +257,8 @@ def modify_reference_id_data()
 - RDATE命令対応。但しカレンダーソフトがRDATEを滅多に出力しないため、
   テストが不完全と考えています。
 
-## 2026-1-27: Version:3.0beta2
-(内部メモ:subversion revision 2195, フォルダv3.0)
+## 2026-1-27: Version:3.0
+(内部メモ:subversion revision 2196, フォルダv3.0)
 
 - 繰返し命令の処理のサンプル ouc4.ics 追加。
 
@@ -266,6 +266,8 @@ def modify_reference_id_data()
   伴う修正。ただし関数名やサンプルなどは修正していません。
 
   引数追加。--enhance-tourokunum, --enhance-touroku-number
+
+- 引数--add-summary-head に使えない文字列「Hidden」を追加。
 
 # Known bugs:
 
