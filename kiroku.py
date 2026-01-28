@@ -84,10 +84,10 @@ $ cd "ソフトウエアを展開したフォルダ"
 は、下記引数で起動した場合と同等です。
 
   $ python3 icsconvcsv.py --enable-file-exist-test -z -k -m (継続行)
-        -FGaroon guess {__INPUT_ICS_FILENAME} schedules今月NAME.csv
+        -FGaroon -Esimple guess {__INPUT_ICS_FILENAME} schedules今月NAME.csv
 
   $ python3 icsconvcsv.py --enable-file-exist-test -z -k -m (継続行)
-        -FGaroon guess {__INPUT_ICS_FILENAME} schedules先月NAME.csv
+        -FGaroon -Esimple guess {__INPUT_ICS_FILENAME} schedules先月NAME.csv
 
   "今月"と"先月"は20yynnの6桁の数字
 
@@ -117,7 +117,7 @@ if __name__ == '__main__':
     exec_filename = re.sub(r'\.py$', "", exec_filename)
 
     # 許可する引数。
-    short_opt = 'hWzkm'
+    short_opt = 'hWzkmE:'
     long_opt = ["format-garoon"]
     long_opt += ["help", "enable-file-exist-test", "add-summary-head="]
 
@@ -137,6 +137,10 @@ if __name__ == '__main__':
     #
     # SUMMARYヘッダに独自の拡張を行いたい場合は下記のような形で追記ください。
     # ext_argv += ['--add-summary-head=研究,教育']
+
+    # UTF-8のギリシャ数字や丸付き数字などをアスキー文字に変換します。
+    # この処理により情報量が落ちます。停止したい場合は以下をコメントアウト
+    ext_argv += ['-Esimple']
 
     flag = None
 

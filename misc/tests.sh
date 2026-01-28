@@ -152,6 +152,7 @@ function cmp_ics() {
 }
 
 echo "ライブラリicsconvcsvの一括テストスクリプト。「MEMO:失敗で正常」とある場合は無視して問題ありません。"
+echo "ubuntu24.*ではfoldコマンドが日本語未対応のため、一部文字化けします。"
 
 if [ $SILENT == "off" ]; then
     echo "テストに失敗時のみ詳細がでます。"
@@ -393,18 +394,40 @@ cmp_ics "--show-teams-infomation --delete-4th-line-onwar  -Fgaroon -Cutf-8 all" 
 cmp_ics "--show-teams-infomation --delete-4th-line-onwar -Fgaroon -Cutf-8 all" "ouc16" "ou16-4th"
 
 echo
-echo "MEMO: 文字コード変換テスト(ICSファイル側にShift_JISに変換できない文字があると差分となる)"
-
-NKF=on
-cmp_ics "--show-teams-infomation -Fgaroon all" "ou16" "ou16-teams"
-cmp_ics "--show-teams-infomation -Fgaroon all" "ouc16" "ouc16-teams"
-NKF=off
-
-echo
 echo "MEMO: RDATE関係"
 # 作業メモ「make gen-ouc-omitdes.csv」の出力がほぼ同等のはず。
 cmp_ics "-Fomitdescription all" "ouc17-limit2"
 
+
+echo
+echo "MEMO: utf_8では定義されているが、shift_jisで未定義の文字を変換した場合の処理"
+cmp_ics "--print-csv-header -Foutlookclassic all" "ou14-us" "ou14-ouc"
+
+echo
+echo "MEMO: アメリカ東海岸(EDT)の時刻の確認"
+
+cmp_ics "--show-timezone -Fgaroon -Cutf-8 all" "ou15-us" "ou15-us"
+cmp_ics "--show-timezone -TAsia/Tokyo -Fgaroon -Cutf-8 all" "ou15-us" "ou15-jp"
+
+
+echo
+echo "MEMO: 文字コード変換テスト(ICSファイル側にShift_JISに変換できない文字があると差分となる)"
+NKF=on
+
+cmp_ics "-Fgaroon all" "ou17" "ou17"
+
+cmp_ics "-Fgaroon -Esimple all" "ou17" "ou17-simple"
+cmp_ics "-Fgaroon -Ereplace_geta all" "ou17" "ou17-replace_geta"
+cmp_ics "-Fgaroon -Ereplace all" "ou17" "ou17-replace"
+cmp_ics "-Fgaroon -Ebackslashreplace all" "ou17" "ou17-backslashreplace"
+cmp_ics "-Fgaroon -Eignore all" "ou17" "ou17-ignore"
+
+echo
+echo "MEMO: 失敗で正常: 文字コード変換失敗時に停止する指示「-Estrict」"
+ERROR_TAIOU=continue
+cmp_ics "-Fgaroon -Estrict all" "ou17" "ou17"
+ERROR_TAIOU=stop
+NKF=off
 
 echo
 echo "正常終了しました。"
