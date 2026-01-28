@@ -117,7 +117,7 @@ if __name__ == '__main__':
     exec_filename = re.sub(r'\.py$', "", exec_filename)
 
     # 許可する引数。
-    short_opt = 'hWzkm'
+    short_opt = 'hWzkmE:'
     long_opt = ["format-garoon"]
     long_opt += ["help", "enable-file-exist-test", "add-summary-head="]
 

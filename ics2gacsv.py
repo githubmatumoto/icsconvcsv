@@ -57,7 +57,7 @@ if __name__ == '__main__':
     exec_filename = re.sub(r'\.py$', "", exec_filename)
 
     # 許可する引数。
-    short_opt = 'hsmzk'
+    short_opt = 'hsmzkE:'
     long_opt = ["help", "format-garoon", "disable-split-summary",\
                 "extend-summary-head", "add-summary-head=",\
                 "enhance-gyoumunum", "enhance-gyoumu-number",\

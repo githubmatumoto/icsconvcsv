@@ -15,6 +15,7 @@ import csv
 import getopt
 import time
 import dateutil
+import codecs
 import vobject
 
 HAIFU_URL = "https://qiita.com/qiitamatumoto/items/ab9e0cb9a6da257597a4"
@@ -79,6 +80,17 @@ CSVFormat = Enum('CSVFormat',\
 DateTimeFormat = Enum('DateTimeFormat', \
                       [("slash_ymd", "slash_ymd"), ("basic", "basic"), ("extended", "extended")])
 
+# デフォルトは'xmlcharrefreplace' utfからsjisに変換時にsjis未定義コードが出たときに "&#xxxx;"に変換する。
+# Ref: https://docs.python.org/ja/3/howto/unicode.html#converting-to-bytes
+# Ref: https://zenn.dev/hassaku63/articles/f7ca587b86398c
+
+NonPrintErrorHandle = Enum('NonPrintErrorHandle',  \
+                           [("xmlcharrefreplace", "xmlcharrefreplace"), \
+                            ("strict", "strict"), ("ignore", "ignore"), ("replace", "replace"), \
+                            ("backslashreplace", "backslashreplace"), \
+                            ("replace_geta", "replace_geta"), \
+                            ("simple", "simple") ])
+
 class ConstDat:
     """各種定数を収納。"""
     # ヘッダ分割のデフォルト
@@ -98,6 +110,9 @@ class ConstDat:
     UNREF = "(REFERENCE DATA DOES NOT EXIST)"
     # 未定義を示す文字列。変更不可(これを書き換える場合は一部正規表現の修正が必要)
     NA = "(N/A)"
+
+    # 下駄「〓」JIS:0x222e
+    NON_PR_CHAR_DEFAULT = "〓"
 
     #CSV必須ヘッダ
     CSV_REQUIRED = ["DTSTART:DAY", "DTSTART:TIME",\
@@ -207,6 +222,15 @@ class FeatureFlags:
         # Ref: https://techblog.asahi-net.co.jp/entry/2021/10/04/162109
         #出力するCSVの文字コード
         self.CSV_ENCODING = None
+
+        # 文字コード変換時のエラーハンドラ
+        # errors='xmlcharrefreplace' utfからsjisに変換時にsjis未定義コードが出たときに "&#xxxx;"に変換する。
+        self.NON_PRINT_ERROR_HANDLE = NonPrintErrorHandle.xmlcharrefreplace
+
+        # UTF-8をshift_jisに変換するときにエラーとなる文字を読み替える表
+        # 本来は定数なのですが、PreSetup.set_format()で初期化してます。
+        # Ref: https://d-toybox.com/studio/lib/romanNumerals.html
+        self. NON_PR_CHAR_MAP = None
         #
 
 #######################################################
@@ -980,6 +1004,37 @@ class PreSetup:
         #if 'X:ALLDAY_EVENT' in F.CSV_POS:
         #    if F.CSV_ALLDAY_FORMAT != AllDayFormat.addtime:
         #        raise ValueError("Internal Error: テーブルの初期化失敗(未対応の組み合わせ)")
+
+
+        # UTF-8をshift_jisに変換するときにエラーとなる文字を読み替える表
+        #本来は定数なのですが、とりあえずここで初期化(^_^;
+        # Ref:https://d-toybox.com/studio/lib/romanNumerals.html
+        c_map = {
+            chr(0x2002): " ", # UTF-8の半角スペース
+            chr(0x3231): "(株)",
+
+            chr(0x2160): "I",
+            chr(0x2161): "II",
+            chr(0x2162): "III",
+            chr(0x2163): "IV",
+            chr(0x2164): "V",
+            chr(0x2165): "VI",
+            chr(0x2166): "VII",
+            chr(0x2167): "VIII",
+            chr(0x2168): "IX",
+            chr(0x2169): "X",
+            chr(0x216A): "XI",
+            chr(0x216B): "XII",
+            }
+
+        for i in range(1, 21):
+            c_map[chr(0x2460-1+i)] = f"({i})" # 0x2460:丸つき1
+            c_map[chr(0x2474-1+i)] = f"({i})" # 0x2474:カッコ1
+
+        #要検討 U+FF0D 全角ハイフンマイナス “－”
+        #要検討 U+FF5E 全角チルダ（FULLWIDTH TILDE）
+
+        F.NON_PR_CHAR_MAP = c_map
     #####
     @staticmethod
     def parse_args(argv: list, amari_argv: int = -1, \
@@ -1042,6 +1097,9 @@ class PreSetup:
         #
         long_opt += ["delete-4th-line-onward", "show-teams-infomation"]
         long_opt += ["remove-tail-cr", "show-hidden-schedules", "disable-recurrence-id"]
+
+        # 文字コード変換時の未定義文字の置き換え
+        short_opt += "E:"
         long_opt += ["disable-exdate-format-bugfix", "disable-naive-aware-mixed-bugfix"]
         long_opt += ["DEBUG-UID="]
         #
@@ -1125,6 +1183,15 @@ class PreSetup:
                 F.remove_teams_infomation = False
             elif o == "--remove-tail-cr": # old opt -r
                 F.remove_tail_cr = True
+            elif o == "-E":
+                F.NON_PRINT_ERROR_HANDLE = a
+                #ハイフンを取り除く
+
+                for e in NonPrintErrorHandle:
+                    if e.name == F.NON_PRINT_ERROR_HANDLE:
+                        F.NON_PRINT_ERROR_HANDLE = e
+                if not type(F.NON_PRINT_ERROR_HANDLE) is NonPrintErrorHandle:
+                    raise ValueError(f"ERROR: 未対応のNonPrintErrorHandleです: {F.NON_PRINT_ERROR_HANDLE}")
             elif o == "--show-hidden-schedules": # old opt -w
                 F.override_recurrence_id = False
             elif o == "--disable-recurrence-id": # old opt -x
@@ -1349,24 +1416,59 @@ class FileIO:
 
     #######################################
     @staticmethod
+    def replace_geta_handler(error):
+        """
+        geta:下駄
+        エラーハンドラ: UTF8からshift_jisに変換時に未定義文字をConstDat.NON_PR_CHAR_DEFAULTに変換する。
+    """
+        if False:
+            print(f"ErrorHandle:encoding: {error.encoding}", file=sys.stderr)
+            print(f"ErrorHandle:object: {error.object}", file=sys.stderr)
+            c = ord(error.object[error.start])
+            print("ErrorHandle:text-code: "+ hex(c), file=sys.stderr)
+            print(f"ErrorHandle:text-code: {c}", file=sys.stderr)
+            print(f"ErrorHandle:start: {error.start}", file=sys.stderr)
+            print(f"ErrorHandle:end: {error.end}", file=sys.stderr)
+            print(f"ErrorHandle:reason: {error.reason}", file=sys.stderr)
+
+        ###
+        return (ConstDat.NON_PR_CHAR_DEFAULT, error.end)
+
+    @staticmethod
+    def simple_handler(error):
+        """
+        エラーハンドラ: UTF8からshift_jisに変換時に未定義文字をConstDat.NON_PR_CHAR_DEFAULTに変換する。
+    """
+        c = error.object[error.start]
+        c = F.NON_PR_CHAR_MAP.get(c, ConstDat.NON_PR_CHAR_DEFAULT)
+        return (c, error.end)
+
+    @staticmethod
     def open_csv_object(fname: str):
         """
         出力先のファイルを開く。 文字列で"stdout"を指定すると標準出力となる。
     """
+        # Ref: https://docs.python.org/ja/3/howto/unicode.html#converting-to-bytes
+        # Ref: https://geroforce.hatenablog.com/entry/2018/12/05/114633
+        #      WindowsのPython3で標準出力をUTF8にする
+        # Ref: https://zenn.dev/hassaku63/articles/f7ca587b86398c
+        #      [python] やむを得ない事情で utf-8 の文字集合からなる日本語を
+        #       sjis エンコードしなければならない場合のワークアラウンド
+
         if fname == "stdin"  or fname[0] == "-":
             raise RuntimeError(f"ファイル名指定エラー: {fname}")
 
-        # errors='xmlcharrefreplace' utfからsjisに変換時にsjis未定義コードが出たときに "&#xxxx;"に変換する。
-        # Ref: https://docs.python.org/ja/3/howto/unicode.html
-        # Ref: https://zenn.dev/hassaku63/articles/f7ca587b86398c
-        #
-        #escale_type = 'backslashreplace'
-        escale_type = 'xmlcharrefreplace'
+        if F.NON_PRINT_ERROR_HANDLE == NonPrintErrorHandle.replace_geta:
+            codecs.register_error('replace_geta', FileIO.replace_geta_handler)
+
+        if F.NON_PRINT_ERROR_HANDLE == NonPrintErrorHandle.simple:
+            codecs.register_error('simple', FileIO.simple_handler)
+
         if fname == "stdout":
-            #https://geroforce.hatenablog.com/entry/2018/12/05/114633
+
             sys.stdout = io.TextIOWrapper(sys.stdout.buffer, \
                                           encoding=F.CSV_ENCODING.name, \
-                                          errors=escale_type, newline="")
+                                          errors=F.NON_PRINT_ERROR_HANDLE.name, newline="")
             csv_out = sys.stdout
         else:
             if (not F.overwrite) and os.path.exists(fname):
@@ -1377,7 +1479,7 @@ class FileIO:
                     print("WARNING: 処理を中断します。")
                     sys.exit(1)
 
-            csv_out = open(fname, 'w', encoding=F.CSV_ENCODING.name, errors=escale_type, newline="")
+            csv_out = open(fname, 'w', encoding=F.CSV_ENCODING.name, errors=F.NON_PRINT_ERROR_HANDLE.name, newline="")
 
         # Pythonライブラリの仕様でCSVの最後の改行はCR+LF。
         # Ref: https://docs.python.org/ja/3/library/csv.html
@@ -2379,7 +2481,7 @@ SUMMARYの最後尾に「%数字」もしくは「g数字」があった場合�
 ※詳細は関数ModCSV.enhanced_gyoumunum()をみよ。
 """
 
-HELP_PART2 = """
+HELP_PART2 = f"""
 * CSVの文字コードの指定
 
 -C"文字列", -Cshift_jis, -Cutf_8, -Cutf_8_sig
@@ -2441,6 +2543,36 @@ OutlookClassicとほぼ同等の出力を行います。文字コードはUTF-8�
 ルしてください。
 
 ※TimeZoneが不適切な場合、日時計算に失敗し、誤ったCSVが生成されます。
+
+* 文字コード変換時の未定義文字の置き換え:
+
+-E"文字列"
+
+ICSファイルはUTF-8である。CSVの文字コードがUTF-8以外の場合、出力時に
+一部の漢字や記号が変換ができない。変換ができない場合の挙動を指定する。
+
+-Exmlcharrefreplace
+変換ができなかった文字をXML形式「＆＃数字；」に置き換える。デフォルト
+
+-Esimple
+引数「-Exmlcharrefreplace」に加えて、最低限の読み替えを行う。
+ - ギリシャ数字をアルファベットに置き換え
+ - 丸付き数字などを「(1)」に置き換え
+ - UTF-8の半角スペース「U+2002」をASCIIの半角スペースに置き換え
+ - 「(株)」などを置き換え
+
+※丸付き数字は数種類定義されているため、読み替えにより情報が落ちます。
+※後日追加される可能性あります。
+
+-Ereplace_geta
+引数「-Ereplace_geta」を指定した場合、変換ができなかった
+文字を「{ConstDat.NON_PR_CHAR_DEFAULT}」に置き換える。
+
+-Ebackslashreplace, -Ereplace, -Estrict, -Eignore
+
+それ以外の引数はPythonのマニュアルと同じ挙動のため、以下の参照してほしい。
+
+ https://docs.python.org/ja/3/howto/unicode.html#converting-to-bytes
 
 =====================================================================
 
