@@ -269,6 +269,16 @@ def modify_reference_id_data()
 
 - 引数--add-summary-head に使えない文字列「Hidden」を追加。
 
+## 2026-1-28: Version:3.1beta1
+(内部メモ:subversion revision xxx, フォルダv3.1)
+
+- ICSファイルはUTF-8である。CSVの文字コードがUTF-8以外の場合、出力時に
+  一部の漢字や記号が変換ができない。変換ができない場合の挙動を指定するオ
+  プションを追加。
+
+  引数追加: -Exmlcharrefreplace, -Esimple, -Ereplace_geta,
+  -Ebackslashreplace, -Ereplace, -Estrict, -Eignore
+
 # Known bugs:
 
 - 西暦を判断する基準の正規表現が「[^\\d]20[\\d]{6}」などになってるので、
