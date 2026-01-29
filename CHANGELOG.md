@@ -281,6 +281,12 @@ def modify_reference_id_data()
 
 - 職場向けコマンドkiroku.pyにデフォルト引数として、「-Esimple」を追加。
 
+## 2026-1-29: Version:3.1.1beta
+(内部メモ:subversion revision 22xx, フォルダv3.1)
+
+- UTF-8の読み替え表更新。サンプルのファイル名などが間違えてたので、修
+  正。
+
 # Known bugs:
 
 - 西暦を判断する基準の正規表現が「[^\\d]20[\\d]{6}」などになってるので、
