@@ -1,0 +1,124 @@
+BEGIN:VCALENDAR
+PRODID:-//Microsoft Corporation//Outlook 16.0 MIMEDIR//EN
+VERSION:2.0
+METHOD:PUBLISH
+X-CALSTART:20260607T010000Z
+X-CALEND:20260607T020000Z
+X-CLIPSTART:20260606T150000Z
+X-CLIPEND:20260607T150000Z
+X-WR-RELCALID:{0000002E-86F8-9834-66DB-251B345FE7C0}
+X-WR-CALNAME:Fukuoka Taro
+X-PRIMARY-CALENDAR:TRUE
+X-OWNER;CN="Fukuoka Taro":mailto:fukuoka.taro@example.jp
+X-MS-OLK-WKHRSTART;TZID="東京 (標準時)":083000
+X-MS-OLK-WKHREND;TZID="東京 (標準時)":171500
+X-MS-OLK-WKHRDAYS:MO,TU,WE,TH,FR
+BEGIN:VTIMEZONE
+TZID:Tokyo Standard Time
+BEGIN:STANDARD
+DTSTART:16010101T000000
+TZOFFSETFROM:+0900
+TZOFFSETTO:+0900
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VTIMEZONE
+TZID:東京 (標準時)
+BEGIN:STANDARD
+DTSTART:16010101T000000
+TZOFFSETFROM:+0900
+TZOFFSETTO:+0900
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20260128T052927Z
+DESCRIPTION:2026年6月7日 10:00-10:30\nUTF-8の半角スペース:" "\n
+	4バイトUTF-8:𠮷\n笑い:😀\n花:🌸\nサッカーボール:
+	⚽\n家族:👨‍👩‍👧‍👦\n以上\n
+DTEND;TZID="Tokyo Standard Time":20260607T103000
+DTSTAMP:20260129T032700Z
+DTSTART;TZID="Tokyo Standard Time":20260607T100000
+LAST-MODIFIED:20260129T032539Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:160:UTF-8各種絵文字📣
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E00800000000ED99F7111790DC01000000000000000
+	010000000031C354B081B534C9DE204DF3D72EBD4
+X-ALT-DESC;FMTTYPE=text/html:<html>\n<head>\n<meta http-equiv="Content-Type
+	" content="text/html\; charset=utf-8">\n</head>\n<body>\n<div style="font-
+	family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\, Calibri\, Helve
+	tica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;">\n2026年6
+	月7日 10:00-10:30</div>\n<div style="font-family: Aptos\, Aptos_Embedded
+	Font\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-serif\; font-size:
+	 12pt\; color: rgb(0\, 0\, 0)\;">\nUTF-8の半角スペース:&quot\; &q
+	uot\;</div>\n<div style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_M
+	SFontService\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color:
+	 rgb(0\, 0\, 0)\;">\n4バイトUTF-8:𠮷</div>\n<div style="font-family
+	: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\, Calibri\, Helvetica\,
+	 sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;">\n笑い:😀</
+	div>\n<div style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontSe
+	rvice\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\
+	, 0\, 0)\;">\n花:🌸</div>\n<div style="font-family: Aptos\, Aptos_Emb
+	eddedFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-serif\; font-
+	size: 12pt\; color: rgb(0\, 0\, 0)\;">\nサッカーボール:⚽</div>\n<
+	div style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\,
+	 Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0
+	)\;">\n家族:👨‍👩‍👧‍👦</div>\n<div style="font-fa
+	mily: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\, Calibri\, Helveti
+	ca\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;">\n以上<br>\
+	n</div>\n</body>\n</html>\n
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+CLASS:PUBLIC
+CREATED:20260128T052957Z
+DESCRIPTION:2026年6月7日 10:30-11:00\n年号:㍾\,㍽\,㍼\,㍻\,㋿.\n(
+	株): ㈱\nギリシャ数字:Ⅰ\,Ⅱ\,Ⅲ\,Ⅳ\,Ⅴ\,Ⅵ\,Ⅶ\,Ⅷ\,Ⅸ\
+	,Ⅹ\,Ⅺ\,Ⅻ.\n丸数字:①-⑳.\nカッコ数字:⑴-⒇.\n以上\n
+DTEND;TZID="Tokyo Standard Time":20260607T110000
+DTSTAMP:20260129T032700Z
+DTSTART;TZID="Tokyo Standard Time":20260607T103000
+LAST-MODIFIED:20260129T032528Z
+PRIORITY:5
+SEQUENCE:0
+SUMMARY;LANGUAGE=ja:TEST:161:UTF-8各種文字
+TRANSP:OPAQUE
+UID:040000008200E00074C5B7101A82E00800000000D952AE231790DC01000000000000000
+	010000000705F3ADB3D82E64290229C0C2AF5CADE
+X-ALT-DESC;FMTTYPE=text/html:<html>\n<head>\n<meta http-equiv="Content-Type
+	" content="text/html\; charset=utf-8">\n</head>\n<body>\n<div style="font-
+	family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\, Calibri\, Helve
+	tica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;">\n2026年6
+	月7日 10:30-11:00</div>\n<div style="font-family: Aptos\, Aptos_Embedded
+	Font\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-serif\; font-size:
+	 12pt\; color: rgb(0\, 0\, 0)\;">\n年号:㍾\,㍽\,㍼\,㍻\,㋿.</div>\n
+	<div style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\
+	, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\,
+	0)\;">\n(株):&nbsp\;㈱</div>\n<div style="font-family: Aptos\, Aptos_Emb
+	eddedFont\, Aptos_MSFontService\, Calibri\, Helvetica\, sans-serif\; font-
+	size: 12pt\; color: rgb(0\, 0\, 0)\;">\nギリシャ数字:Ⅰ\,Ⅱ\,Ⅲ\,
+	Ⅳ\,Ⅴ\,Ⅵ\,Ⅶ\,Ⅷ\,Ⅸ\,Ⅹ\,Ⅺ\,Ⅻ.</div>\n<div style="font-famil
+	y: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\, Calibri\, Helvetica\
+	, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;">\n丸数字:①-
+	⑳.</div>\n<div style="font-family: Aptos\, Aptos_EmbeddedFont\, Aptos_MS
+	FontService\, Calibri\, Helvetica\, sans-serif\; font-size: 12pt\; color:
+	rgb(0\, 0\, 0)\;">\nカッコ数字:⑴-⒇.</div>\n<div style="font-famil
+	y: Aptos\, Aptos_EmbeddedFont\, Aptos_MSFontService\, Calibri\, Helvetica\
+	, sans-serif\; font-size: 12pt\; color: rgb(0\, 0\, 0)\;">\n以上<br>\n</
+	div>\n</body>\n</html>\n
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-IMPORTANCE:1
+BEGIN:VALARM
+TRIGGER:-PT15M
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+END:VALARM
+END:VEVENT
+END:VCALENDAR

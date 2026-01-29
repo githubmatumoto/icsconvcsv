@@ -14,8 +14,8 @@ import zoneinfo
 import csv
 import getopt
 import time
-import dateutil
 import codecs
+import dateutil
 import vobject
 
 HAIFU_URL = "https://qiita.com/qiitamatumoto/items/ab9e0cb9a6da257597a4"
@@ -44,7 +44,7 @@ ICS to CSV コンバータ icsconvcsv.py が利用するライブラリ。
 __doc__ += HELP_LICENSE
 
 #######################################
-VERSION = "3.0"
+VERSION = "3.1"
 #########################################################################
 
 # utf_8_sig: WindowsでBOMをつける。
@@ -227,11 +227,42 @@ class FeatureFlags:
         # errors='xmlcharrefreplace' utfからsjisに変換時にsjis未定義コードが出たときに "&#xxxx;"に変換する。
         self.NON_PRINT_ERROR_HANDLE = NonPrintErrorHandle.xmlcharrefreplace
 
-        # UTF-8をshift_jisに変換するときにエラーとなる文字を読み替える表
-        # 本来は定数なのですが、PreSetup.set_format()で初期化してます。
         # Ref: https://d-toybox.com/studio/lib/romanNumerals.html
-        self. NON_PR_CHAR_MAP = None
-        #
+        # UTF-8をshift_jisに変換するときにエラーとなる文字を読み替える表
+        # 本来はclass ConstDatに入れるべき定数なのですが、とりあえずここで初期化(^_^;
+        # MEMO: 以下を塚した場合は、help()マニュアルも書き換える。
+
+        self.NON_PR_CHAR_MAP = {
+            chr(0x2002): " ", # UTF-8の半角スペース
+            chr(0x3231): "(株)",
+            chr(0x337E): "明治",
+            chr(0x337D): "大正",
+            chr(0x337C): "昭和",
+            chr(0x337B): "平成",
+            chr(0x32FF): "令和",
+
+            chr(0x2160): "I",
+            chr(0x2161): "II",
+            chr(0x2162): "III",
+            chr(0x2163): "IV",
+            chr(0x2164): "V",
+            chr(0x2165): "VI",
+            chr(0x2166): "VII",
+            chr(0x2167): "VIII",
+            chr(0x2168): "IX",
+            chr(0x2169): "X",
+            chr(0x216A): "XI",
+            chr(0x216B): "XII",
+            }
+        for i in range(1, 21):
+            self.NON_PR_CHAR_MAP[chr(0x2460-1+i)] = f"({i})" # U+2460:丸つき1
+            self.NON_PR_CHAR_MAP[chr(0x2474-1+i)] = f"({i})" # U+2474:カッコ1
+
+        #要検討 U+FF0D 全角ハイフンマイナス “－”
+        #要検討 U+FF5E 全角チルダ（FULLWIDTH TILDE）
+
+        #MEMO: debug用4Byte UTF-8。通常はコメントアウト
+        #self.NON_PR_CHAR_MAP[chr(0x20BB7)] = "吉" # 頭が土(U+20BB7).吉野家は正しくはこの漢字
 
 #######################################################
 class TimeRange:
@@ -1004,37 +1035,6 @@ class PreSetup:
         #if 'X:ALLDAY_EVENT' in F.CSV_POS:
         #    if F.CSV_ALLDAY_FORMAT != AllDayFormat.addtime:
         #        raise ValueError("Internal Error: テーブルの初期化失敗(未対応の組み合わせ)")
-
-
-        # UTF-8をshift_jisに変換するときにエラーとなる文字を読み替える表
-        #本来は定数なのですが、とりあえずここで初期化(^_^;
-        # Ref:https://d-toybox.com/studio/lib/romanNumerals.html
-        c_map = {
-            chr(0x2002): " ", # UTF-8の半角スペース
-            chr(0x3231): "(株)",
-
-            chr(0x2160): "I",
-            chr(0x2161): "II",
-            chr(0x2162): "III",
-            chr(0x2163): "IV",
-            chr(0x2164): "V",
-            chr(0x2165): "VI",
-            chr(0x2166): "VII",
-            chr(0x2167): "VIII",
-            chr(0x2168): "IX",
-            chr(0x2169): "X",
-            chr(0x216A): "XI",
-            chr(0x216B): "XII",
-            }
-
-        for i in range(1, 21):
-            c_map[chr(0x2460-1+i)] = f"({i})" # 0x2460:丸つき1
-            c_map[chr(0x2474-1+i)] = f"({i})" # 0x2474:カッコ1
-
-        #要検討 U+FF0D 全角ハイフンマイナス “－”
-        #要検討 U+FF5E 全角チルダ（FULLWIDTH TILDE）
-
-        F.NON_PR_CHAR_MAP = c_map
     #####
     @staticmethod
     def parse_args(argv: list, amari_argv: int = -1, \
@@ -1418,8 +1418,8 @@ class FileIO:
     @staticmethod
     def replace_geta_handler(error):
         """
-        geta:下駄
         エラーハンドラ: UTF8からshift_jisに変換時に未定義文字をConstDat.NON_PR_CHAR_DEFAULTに変換する。
+        補足：関数名はgate(ゲート)ではなくgeta(下駄)
     """
         if False:
             print(f"ErrorHandle:encoding: {error.encoding}", file=sys.stderr)
@@ -1437,7 +1437,8 @@ class FileIO:
     @staticmethod
     def simple_handler(error):
         """
-        エラーハンドラ: UTF8からshift_jisに変換時に未定義文字をConstDat.NON_PR_CHAR_DEFAULTに変換する。
+        エラーハンドラ: UTF8からshift_jisに変換時に表としてF.NON_PR_CHAR_MAPを使う。
+        未定義文字をConstDat.NON_PR_CHAR_DEFAULTに変換する。
     """
         c = error.object[error.start]
         c = F.NON_PR_CHAR_MAP.get(c, ConstDat.NON_PR_CHAR_DEFAULT)
@@ -1460,8 +1461,7 @@ class FileIO:
 
         if F.NON_PRINT_ERROR_HANDLE == NonPrintErrorHandle.replace_geta:
             codecs.register_error('replace_geta', FileIO.replace_geta_handler)
-
-        if F.NON_PRINT_ERROR_HANDLE == NonPrintErrorHandle.simple:
+        elif F.NON_PRINT_ERROR_HANDLE == NonPrintErrorHandle.simple:
             codecs.register_error('simple', FileIO.simple_handler)
 
         if fname == "stdout":
@@ -1514,7 +1514,7 @@ class ModCSV:
         tmp_list2 = [item for item in tmp_list if item != '']
 
         if "Hidden" in tmp_list2:
-                raise ValueError(f"ERROR: {mess}使えない文字列「Hidden」が含まれます。")
+            raise ValueError(f"ERROR: {mess}使えない文字列「Hidden」が含まれます。")
 
         F.SPLIT_SUMMARY_EXTEND_HEAD += tmp_list2
     #
@@ -2561,12 +2561,14 @@ ICSファイルはUTF-8である。UTF-8をshift_jisに変換するときにエ�
  - ギリシャ数字を半角ASCIIに置き換え
  - 丸付き数字やカッコ付き数字などを「(1)」に置き換え
  - UTF-8の半角スペース「U+2002」をASCIIの半角スペースに置き換え
- - 「(株)」などを置き換え
+ - 「(株)」などや年号を置き換え
  - 後日追加される可能性あります。
 
 -Ereplace_geta
 引数「-Ereplace_geta」を指定した場合、変換ができなかった
 文字を「{ConstDat.NON_PR_CHAR_DEFAULT}」に置き換える。
+
+※gate(ゲート)ではなくgeta(下駄)
 
 -Ebackslashreplace, -Ereplace, -Estrict, -Eignore
 
