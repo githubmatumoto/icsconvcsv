@@ -103,7 +103,7 @@ def __myhelp(fname):
     sys.exit()
 
 if __name__ == '__main__':
-    if libicsconvcsv.VERSION != "3.0":
+    if libicsconvcsv.VERSION != "3.1":
         print("ERROR: ファイルが古いです。最新のkiroku.pyとlibicsconvcsv.pyをダウンロードしてください。", file=sys.stderr)
         sys.exit(1)
 
