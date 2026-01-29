@@ -239,6 +239,7 @@ cmp_ics "all" "ou3"
 ERROR_TAIOU=continue
 echo
 echo "MEMO: 失敗で正常: TimeZoneを誤指定。6月2日が欠落。"
+echo "MEMO: 一部環境では 「 無効なTimeZoneとして[US/Eastern]が指定されました。」というエラーになります。この場合は pip3でライブラリtzdataを更新ください。"
 cmp_ics "-TUS/Eastern all" "ou3"
 echo
 echo "MEMO: 失敗で正常: TimeZoneを誤指定。7月20日の除外を失敗。7月27日が欠落。"
