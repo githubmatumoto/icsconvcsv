@@ -295,38 +295,6 @@ def modify_reference_id_data()
   ていなかったが、一部のLinux環境(WSLのubuntu24.04)で動作しない事例を
   把握したため、加筆。
 
-## 2026-3-23 Version:3.2beta1
-(内部メモ:subversion revision 2210, フォルダv3.2)
-
-- 文字コードを指定するオプション-Cをkiroku.pyに追加。UTF-8BOMで提出す
-  る可能性があるため。
-
-- ICSのVEVENTの要素「LOCATION」に特定の用語が含まれる場合、
- 含まれるVEVENTを削除する命令の追加
-
-  --delete-location=
-
-  kiroku.py ではデフォルトで以下引数を追加。
-
-  '--delete-location=MicrosoftTeams会議:MicrosoftTeamsMeeting'
-
-  ※引数解析の都合で、LOCATIONに含まれる半角空白を除去してください。例
-  えばICSの要素が「LOCATION:Microsoft Teams 会議」の場合は半角空白を除
-  去して「MicrosoftTeams会議」と指定してください。
-
-
-- 2026年3月改訂の業務記録の仕様に準じて追加
-
-  職場の2026年3月以降の業務記録簿の書式はDESCRIPTIONの一行めに「登録番
-  号」と記載されている。これを旧書式に変更する。 具体的には1行めの「登
-  録番号」を削除する。kiroku.py ではデフォルトで追加。
-
-  --convert-old-style-tourokunum
-  --convert-old-style-touroku-number
-
-  SUMMARYに記載する拡張業務番号は不採用となったため、kiroku.pyから引数
-  「-z」/「--enhance-gyoumunum」を削除。
-
 # Known bugs:
 
 - 西暦を判断する基準の正規表現が「[^\\d]20[\\d]{6}」などになってるので、
@@ -355,6 +323,3 @@ DESCRIPTIONに最初から上記が入って場合は誤動作する。
 > ModCSV.enhanced_gyoumunum()
 
 - RDATEに対応はしたが、動作確認例が少ないため、要注意。
-
-- 引数「--delete-location」で指定するlocationを複数指定する場合「:」区切りとしているが、
-  locationの値に「:」が含まれる場合は正常に処理できない。
