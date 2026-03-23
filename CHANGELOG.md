@@ -296,7 +296,7 @@ def modify_reference_id_data()
   把握したため、加筆。
 
 ## 2026-3-23 Version:3.2beta1
-(内部メモ:subversion revision 2209, フォルダv3.2)
+(内部メモ:subversion revision 2210, フォルダv3.2)
 
 - 文字コードを指定するオプション-Cをkiroku.pyに追加。UTF-8BOMで提出す
   る可能性があるため。

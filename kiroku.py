@@ -87,12 +87,12 @@ $ cd "ソフトウエアを展開したフォルダ"
 
   $ python3 icsconvcsv.py --enable-file-exist-test -k -m (継続行)
         --convert-old-style-tourokunum (継続行)
-        '--delete-location=MicrosoftTeams会議:MicrosoftTeamsMeeting' (継続行)
+        --delete-location=MicrosoftTeams会議:MicrosoftTeamsMeeting (継続行)
         -FGaroon -Esimple guess {__INPUT_ICS_FILENAME} schedules今月NAME.csv
 
   $ python3 icsconvcsv.py --enable-file-exist-test -k -m (継続行)
         --convert-old-style-tourokunum (継続行)
-        --delete-location=MicrosoftTeams会議:MicrosoftTeamsMeeting' (継続行)
+        --delete-location=MicrosoftTeams会議:MicrosoftTeamsMeeting (継続行)
         -FGaroon -Esimple guess {__INPUT_ICS_FILENAME} schedules先月NAME.csv
 
   "今月"と"先月"は20yynnの6桁の数字
