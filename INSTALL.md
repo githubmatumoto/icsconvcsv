@@ -22,7 +22,7 @@ by 松元隆二
 - <https://github.com/githubmatumoto/icsconvcsv/releases/>
 
 ソフトウエアを展開したフォルダを覚えておいてください。ファイル
-「INSTALL.txt」や「icsconvcsv.py」が含まれるフォルダです。
+「INSTALL.md」や「icsconvcsv.py」が含まれるフォルダです。
 
 # 確認環境
 
@@ -113,8 +113,7 @@ by 松元隆二
 Linux/macOSではvenvの設定がお勧めです。前述してるがpythonのバージョン
 は3.9以上である必要があります。
 
-venv初期設定
-  コマンド名「python3」はOSによって異なります
+venv初期設定。コマンド名「python3」はOSによって異なります。
 
 > $ cd ~/ <BR>
 > $ python3 -m venv .icsconvcsv --prompt icsconvcsv
