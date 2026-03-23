@@ -425,6 +425,28 @@ ERROR_TAIOU=stop
 NKF=off
 
 echo
+echo "MEMO: LOCATION関係(特定のLOCATIONのVEVENTを削除する)"
+echo "TimeZone関連の警告は無視してよい"
+
+cmp_ics "-Fgaroon -Cutf-8 all" "ou19" "ou19"
+cmp_ics "-Fgaroon -Cutf-8 all" "ouc19" "ou19"
+
+cmp_ics "-Fgaroon -Cutf-8 --delete-location=MicrosoftTeams会議:MicrosoftTeamsMeeting all" "ou19" "ou19-del-teams"
+cmp_ics "-Fgaroon -Cutf-8 --delete-location=MicrosoftTeams会議:MicrosoftTeamsMeeting all" "ouc19" "ou19-del-teams"
+
+echo
+echo "MEMO: 業務記録仕様変更のため追加(2026/3/23)"
+echo "本採用の業務記録の書式では一行めに「登録番号」と記載されている。これを"
+echo "CSVの旧書式の業務記録に変更する。具体的には一行めの行頭に記載されてい"
+echo "る「登録番号」という文字列を削除する。"
+
+cmp_ics "-Fgaroon -Cutf-8 all" "ou20" "ou20"
+cmp_ics "-Fgaroon -Cutf-8 all" "ouc20" "ou20"
+
+cmp_ics "-Fgaroon -Cutf-8 --convert-old-style-tourokunum all" "ou20" "ou20-oldstyle"
+cmp_ics "-Fgaroon -Cutf-8 --convert-old-style-tourokunum all" "ouc20" "ou20-oldstyle"
+
+echo
 echo "正常終了しました。"
 
 

@@ -19,6 +19,16 @@ ICSファイル名の頭はICSを生成したアプリ名です。
 
 の略です。
 
+Outlookのユーザは3種類使ってます。すべて言語は日本語です。
+
+- Outlook(有償版, Web, classic): 大部分のICSファイル
+- Outlook(Web無償版): ファイル名の後ろに -freeを追加
+- Outlook(Web無償版/アメリカ東時間): ファイル名の後ろに-usを追加
+
+大部分はOutlook(有償版, Web, classic)で生成したICSファイルですが、
+TimeZoneのテストやTeams Meetingの時のみ無償版のICSファイルを使っています。
+
+
 ICSファイル名の後ろで下記は出力範囲の指定。指定ない場合は、詳細をすべ
 て出力したファイルです。
 
@@ -392,7 +402,7 @@ END:VEVENT
 Outlookで使える属性の調査。Outlookでスケジュールを入力するときに設定可能な
 各種属性のテストになります。
 
-Outlook(Web, classic)/Outlook(Web無償版)/Outlook(Web無償版/アメリカ東時間)
+Outlook(有償版,Web, classic)/Outlook(Web無償版)/Outlook(Web無償版/アメリカ東時間)
 
 出力はCSV-Simple形式のみ調査。
 
@@ -854,6 +864,125 @@ UTF-8の半角スペース:" "
 カッコ数字:⑴-⒇.
 以上
 ```
+
+## 2.8: ou19.ics, ouc19.ics, ouc19-free.ics, ouc19-us.ics
+
+Outlook(Web無償版/アメリカ東時間)の言語環境を英語に変更して作成。
+
+「入力後Cancelする」という指示は会議参加者に承認をもらったあとに
+キャンセルする。Cancelされましたという表示が残っても削除はしない。
+
+※実際のICSファイルはパスワードが入ってるため、DESCRIPTIONはすでに加工
+してます。本プログラムで触ってないX-ALT-DESCは完全に削除してます。
+
+
+```:text
+※Office365 Outlookから入力。
+-TEST:170:Teams会議:Office365から無償Outlook(jp/us)へ
+2026年3月23日: 18:00-18:30
+参加者に無償Outlook追加(jp/us)
+Teams会議開催
+```
+
+```:text
+※Office365 Outlookから入力。
+-TEST:171:Teams会議:Office365から無償Outlook(jp/us)へ/キャンセルする
+2026年3月23日: 18:30-19:00
+参加者に無償Outlook追加(jp/us)
+Teams会議開催
+入力後Cancelする
+```
+
+```:text
+※Office365 Outlookから入力。
+-TEST:172:Teams会議:Office365から無償Outlook(jp/us)へ/SetLocation
+2026年3月23日: 19:00-19:30
+参加者に無償Outlook追加(jp/us)
+Teams会議開催
+ロケーションに「テストロケーション」と入力
+```
+
+```:text
+※Office365 Outlookから入力。
+-TEST:173:Teams会議:Office365から無償Outlook(jp/us)へ//SetLocation/キャンセルする
+2026年3月23日: 19:30-20:00
+参加者に無償Outlook追加(jp/us)
+Teams会議開催
+ロケーションに「テストロケーション」と入力
+入力後Cancelする
+```
+
+```:text
+※Outlook(Web無償版/アメリカ東時間/英語環境)から入力
+-TEST:174:TeamsMeeting:Free Outlook(us) to Office365
+2026/May/23: 7:00-7:30/EDT
+Meeting Member: Office365
+Schedule a Teams meeting.
+```
+
+```:text
+※Outlook(Web無償版/アメリカ東時間/英語環境)から入力
+-TEST:175:TeamsMeeting:Free Outlook(us) to Office365/Cancel
+2026/May/23: 7:30-8:00/EDT
+Meeting Member: Office365
+Schedule a Teams meeting.
+Plan to Cancel.
+```
+
+```:text
+※Outlook(Web無償版/アメリカ東時間/英語環境)から入力
+-TEST:176:TeamsMeeting:Free Outlook(us) to Office365/SetLocation
+2026/May/23: 8:00-8:30/EDT
+Meeting Member: Office365
+Schedule a Teams meeting.
+SetLocation: TEST LOCATION
+```
+
+```:text
+※Outlook(Web無償版/アメリカ東時間/英語環境)から入力
+-TEST:177:TeamsMeeting:Free Outlook(us) to Office365/SetLocation/Cancel
+2026/May/23: 8:30-9:00/EDT
+Meeting Member: Office365
+Schedule a Teams meeting.
+SetLocation: TEST LOCATION
+Plan to Cancel.
+```
+## 2.9: ou20.ics, ouc20.ics
+※業務記録仕様変更のため追加(2026/3/23)
+
+本採用の業務記録の書式では一行めに「登録番号」と記載されている。これを
+CSVの旧書式の業務記録に変更する。具体的には一行めの行頭に記載されてい
+る「登録番号」という文字列を削除する。
+
+※Office365 Outlookから入力。
+
+```:text
+-TEST:180:新仕様(2026/3)から旧仕様に変換(1)
+登録番号9999
+2026年3月23日: 22:00-22:15
+行頭に空白なし
+```
+```:text
+-TEST:181:新仕様(2026/3)から旧仕様に変換(2)
+ 登録番号9999
+2026年3月23日: 22:15-22:30
+行頭に半角空白あり
+```
+```:text
+-TEST:182:新仕様(2026/3)から旧仕様に変換(3)
+　登録番号9999
+2026年3月23日: 22:30-22:45
+行頭に全角空白あり
+```
+
+```:text
+-TEST:183:新仕様(2026/3)から旧仕様に変換(4)
+(改行)
+登録番号9999
+2026年3月23日: 22:45-23:00
+行頭に改行あり。この場合は一切変更しない
+```
+
 
 # 3: TODO: 今後実装すべき各種ICSサンプル
 
