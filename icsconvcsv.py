@@ -38,7 +38,7 @@ def __myhelp(fname):
     sys.exit()
 
 if __name__ == '__main__':
-    if libicsconvcsv.VERSION != "3.1":
+    if libicsconvcsv.VERSION != "3.2":
         print("ERROR: ファイルが古いです。最新のicsconvcsv.pyとlibicsconvcsv.pyをダウンロードしてください。",file=sys.stderr)
         sys.exit(1)
 
