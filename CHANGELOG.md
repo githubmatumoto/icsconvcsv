@@ -295,11 +295,14 @@ def modify_reference_id_data()
   ていなかったが、一部のLinux環境(WSLのubuntu24.04)で動作しない事例を
   把握したため、加筆。
 
-## 2026-3-23 Version:3.2beta1
-(内部メモ:subversion revision 2210, フォルダv3.2)
+## 2026-3-29 Version:3.2beta2
+(内部メモ:subversion revision 2213, フォルダv3.2)
 
 - 文字コードを指定するオプション-Cをkiroku.pyに追加。UTF-8BOMで提出す
   る可能性があるため。
+
+- kiroku.pyのデフォルト引数 「-m」を削除。作者の個人用設定が残ったまま
+  だった。
 
 - ICSのVEVENTの要素「LOCATION」に特定の用語が含まれる場合、
  含まれるVEVENTを削除する命令の追加

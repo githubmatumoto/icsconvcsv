@@ -4,7 +4,7 @@ by 松元隆二
 
 初版公開: 2025-9-24
 
-最終更新:2026-1-29
+最終更新:2026-3-29
 
 **テキストエディタで閲覧される方へ**:本ファイルはMAKRDOWN言語で記述さ
 れてます。9割プレインテキストですのでテキストエディタで閲覧頂いても問
@@ -26,7 +26,7 @@ by 松元隆二
 
 # 確認環境
 
-## Ubuntu24.04.3LTS/日本語環境
+## Ubuntu24.04.4LTS/日本語環境
 
   OS付属Pythonで確認しています。
 
@@ -42,15 +42,15 @@ by 松元隆二
 
 - <https://apps.microsoft.com/detail/9pnrbtzxmb4z?hl=ja-JP&gl=JP>
 
-  ※URLは2025年12月現在。
+  ※URLは2026年3月29日現在。
 
 コマンドプロンプトで下記コマンドを実行すると、導入されているバージョン
 が確認できます。
 
 > $ python3 --version <BR>
-> Python 3.13.9
+> Python 3.13.12
 
-## macOS 26.0.1/ARM/日本語環境
+## macOS 26.4/ARM/日本語環境
   (IntelMacは未対応。動作確認機材無いため)
 
   Pythonが入ってない場合は「ターミナル」で「python3」と入力すると、OS
@@ -88,10 +88,10 @@ by 松元隆二
 ださい。
 
 > $ python3 --version <BR>
-> $ Python 3.13.9
+> $ Python 3.13.12
 
 > $ pip3 --version <BR>
-> pip 25.2 from C:\Program Files\WindowsApps\(省略)\pip (python 3.13)
+> pip 25.3 from C:\Program Files\WindowsApps\(省略)\pip (python 3.13)
 
 ライブラリのインストール。
 
@@ -100,7 +100,7 @@ by 松元隆二
 
 成功したら下記のような表示になります。
 
-> Successfully installed python-dateutil-2.9.0.post0 pytz-2025.2 six-1.17.0 vobject-0.9.9
+> Successfully installed python-dateutil-2.9.0.post0 pytz-2026.1.post1 six-1.17.0 vobject-0.9.9
 
 (オプション) 通常は不要ですが、TimeZone関係のコードを有効にするには、
 下記ライブラリを導入してください。
@@ -129,10 +129,13 @@ venv有効化
 
 成功したら下記のような表示になります。
 
-> Successfully installed python-dateutil-2.9.0.post0 pytz-2025.2 six-1.17.0 vobject-0.9.9
+> Successfully installed python-dateutil-2.9.0.post0 pytz-2026.1.post1 six-1.17.0 vobject-0.9.9
 
 ※もしvobjectのバージョンが0.9.9より大きい数字になってた場合は、正常に
 動作しない可能性があります。開発者まで連絡頂けると幸いです。
+
+※もしpipのアップグレードをするように表示されたら、指示にしたがってアッ
+プグレードしてください。
 
 (オプション) 通常は不要ですが、TimeZone関係のコードを有効にするには、
 下記ライブラリを導入してください。

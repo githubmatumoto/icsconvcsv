@@ -29,11 +29,9 @@ DESCRIPTION:
 務記録提出用のスクリプトです。入力/出力ファイル名が決め打ちになってい
 ます。
 
-業務記録の記述方法は2026年3月に改訂されています。また出力ファイル形式
-がCSVからICSに変更になっています。
-
-本スクリプトは2026年3月以降の記述方法の業務記録を古い記述方法のCSVファ
-イルに変換します。
+業務記録の提出手続きは2026年3月に改訂されています。詳しくは職場の内部
+資料ご確認ください。本スクリプトは2026年3月以降の書式のICSの業務記録を、
+2026年2月以前に用いられた書式のCSVの業務記録に変換します。
 
 本プログラムを初めて利用する場合は、README.md および INSTALL.mdをエディ
 タで参照して、ソフトウエアicsconvcsvの初期設定を行ってください。
@@ -85,12 +83,12 @@ $ cd "ソフトウエアを展開したフォルダ"
 ※同梱されている「icsconvcsv.py」の簡易版になります。現在の仕様として
 は、下記引数で起動した場合と同等です。
 
-  $ python3 icsconvcsv.py --enable-file-exist-test -k -m (継続行)
+  $ python3 icsconvcsv.py --enable-file-exist-test -k (継続行)
         --convert-old-style-tourokunum (継続行)
         --delete-location=MicrosoftTeams会議:MicrosoftTeamsMeeting (継続行)
         -FGaroon -Esimple guess {__INPUT_ICS_FILENAME} schedules今月NAME.csv
 
-  $ python3 icsconvcsv.py --enable-file-exist-test -k -m (継続行)
+  $ python3 icsconvcsv.py --enable-file-exist-test -k (継続行)
         --convert-old-style-tourokunum (継続行)
         --delete-location=MicrosoftTeams会議:MicrosoftTeamsMeeting (継続行)
         -FGaroon -Esimple guess {__INPUT_ICS_FILENAME} schedules先月NAME.csv
@@ -142,8 +140,9 @@ if __name__ == '__main__':
 
     # CSVの１行めに項目(CSVヘッダ)を出力
     ext_argv += ['-k']
-    # SUMMARYヘッダ拡張。
-    ext_argv += ['-m']
+
+    # SUMMARYヘッダ拡張。(作者の個人用設定)
+    # ext_argv += ['-m']
 
     # 煩雑なファイル存在確認を停止したい場合は以下をコメントアウト
     ext_argv += ['--enable-file-exist-test']
