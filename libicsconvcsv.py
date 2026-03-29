@@ -44,7 +44,7 @@ ICS to CSV コンバータ icsconvcsv.py が利用するライブラリ。
 __doc__ += HELP_LICENSE
 
 #######################################
-VERSION = "3.1"
+VERSION = "3.2"
 #########################################################################
 
 # utf_8_sig: WindowsでBOMをつける。
@@ -203,11 +203,14 @@ class FeatureFlags:
         # CSV_POS2["SUMMARY"] == (CSV_POS["SUMMARY"] + CSV_POS2["H:LENGTH"])
         #
         # 前述のCSVの1行めの最初のヘッダ(self.print_csv_header)と用語が混ざってますので注意ください。
-        #
-        self.CSV_POS2 = {"H:UID":0, "H:DTSTART":1, "H:RECURRENCE_ID":2, "H:LENGTH":3}
 
-        self.CSV_HEADER = [ConstDat.NA, None, None] # 先頭部分のみ。 set_format()で後半をappendする。
-        # == ["H:UID", "H:DTSTART", "H:RECURRENCE_ID"]
+        # 2026年3月改訂の業務記録の仕様に準じる。
+        # 下記に「"H:LOCATION":3」を追加。
+
+        self.CSV_POS2 = {"H:UID":0, "H:DTSTART":1, "H:RECURRENCE_ID":2, "H:LOCATION":3, "H:LENGTH":4}
+
+        self.CSV_HEADER = [ConstDat.NA, None, None, None] # 先頭部分のみ。 set_format()で後半をappendする。
+        # == ["H:UID", "H:DTSTART", "H:RECURRENCE_ID", "H:LOCATION"]
 
         # H:UIDはVEVENTのUID。CSVの項目一覧などは'(N/A)', RECURRENCE-IDで不可視化した場合はNoneを代入
         # Noneの場合はファイルへの出力対象外。
@@ -263,6 +266,15 @@ class FeatureFlags:
 
         #MEMO: debug用4Byte UTF-8。通常はコメントアウト
         #self.NON_PR_CHAR_MAP[chr(0x20BB7)] = "吉" # 頭が土(U+20BB7).吉野家は正しくはこの漢字
+
+        # 職場の業務記録簿の仕様追加(2026/3/23)
+        # 2026年3月改訂の業務記録の仕様に準じる。
+        # 指定したLOCATONが含まれるVEVENTを削除
+        self.DELETE_LOCATION = []
+
+        # 2026年3月改訂の業務記録の仕様に準じる。
+        # 業務記録簿の書式では一行めに「登録番号」と記載されている。trueの場合CSVの旧書式に変更
+        self.convert_old_style_tourokunum = False
 
 #######################################################
 class TimeRange:
@@ -1078,6 +1090,8 @@ class PreSetup:
         #
         long_opt += ["add-summary-head="]
         #
+        #※2026年3月改訂の業務記録の仕様に準じる。
+        #※本仕様は不採用となったため、保守していません(2026/3/23)
         short_opt += "z"
         long_opt += ["enhance-gyoumunum", "enhance-gyoumu-number"]
         long_opt += ["enhance-tourokunum", "enhance-touroku-number"]
@@ -1106,6 +1120,12 @@ class PreSetup:
         #最後に指定されたオプションが有効
         short_opt += "W"
         long_opt += ["disable-file-exist-test", "enable-file-exist-test"]
+
+        # 本採用の業務記録簿の仕様追加(2026/3/23)
+        # 指定したLOCATONが含まれるVEVENTを削除
+        long_opt += ["delete-location="]
+        # 本採用の業務記録簿の書式では一行めに「登録番号」と記載されている。これをCSVの旧書式に変更
+        long_opt += ["convert-old-style-tourokunum", "convert-old-style-touroku-number"]
 
         # 有効な引数の上書き。
         if not allow_long_opt is None:
@@ -1155,6 +1175,8 @@ class PreSetup:
                 ModCSV.set_summary_extend_head("引数--add-summary-headに", a)
             elif o in ("-z", "--enhance-gyoumunum", "--enhance-gyoumu-number",\
                        "--enhance-tourokunum", "--enhance-touroku-number"):
+                # 2026年3月改訂の業務記録の仕様に準じる。
+                # 本仕様は不採用となったため、以降保守は行わない(2026/3/23)
                 F.enhanced_gyoumunum = True
             elif o in ("-k", "--print-csv-header"):
                 F.print_csv_header = True
@@ -1212,6 +1234,12 @@ class PreSetup:
                 # 出力ファイルの上書き確認/入力ファイルの日付確認を行わない
                 F.overwrite = True
                 F.old_file_check = False
+            elif o == ("--delete-location"):
+                # 2026年3月改訂の業務記録の仕様に準じる。
+                ModCSV.set_delete_location(a)
+            elif o in ("--convert-old-style-tourokunum", "--convert-old-style-touroku-number"):
+                # 2026年3月改訂の業務記録の仕様に準じる。
+                F.convert_old_style_tourokunum = True
             elif o in ("-h", "--help"):
                 return None
 
@@ -1628,10 +1656,13 @@ class ModCSV:
     # 登録番号記入の拡張仕様
     @staticmethod
     def enhanced_gyoumunum(description: str, summary: str) -> str:
-        """Summary分割で、Summaryの最後尾に「-数字」もしくは「g数字」があった場合は、
+        """
+        2026年3月改訂の業務記録の仕様に準じる。
+        本仕様は不採用となったため、以降保守は行わない(2026/3/23)
+
+        Summary分割で、Summaryの最後尾に「-数字」もしくは「g数字」があった場合は、
         登録番号と見なし、DESCRIPTIONと置き換える。
 
-        ※仕様検討中。
 
         スケジュールは技術部のみが使うものではなく他の教職員も使う。そのた
         め、謎の記述は極力避けるべきである。タイトル欄に謎の数字をいれるの
@@ -1853,6 +1884,11 @@ class ModCSV:
             if not TimeRange.is_collect(csv_buffer[i][F.CSV_POS2["H:DTSTART"]], timerange):
                 continue
 
+            # 2026年3月改訂の業務記録の仕様に準じる。
+            if not csv_buffer[i][F.CSV_POS2["H:LOCATION"]] is None:
+                if csv_buffer[i][F.CSV_POS2["H:LOCATION"]] in F.DELETE_LOCATION:
+                    continue
+
             ret_index.append(i)
 
             # ICSのデータで指定の要素がなかった場合はNoneが入っている。
@@ -1884,9 +1920,45 @@ class ModCSV:
                 d = ModCSV.enhanced_gyoumunum(description, summary)
                 if d:
                     description = d
+
+            # 2026年3月改訂の業務記録の仕様に準じる。
+            # 業務記録簿の書式では一行めに「登録番号」と記載されている。trueの場合CSVの旧書式に変更
+            if F.convert_old_style_tourokunum:
+                d = re.sub(r"^[　 \t]*登録番号", "", description)
+                if d != description:
+                    description  = d
+
             csv_buffer[i][F.CSV_POS2["DESCRIPTION"]] = description
         # end for i
         return ret_index
+
+    @staticmethod
+    def set_delete_location(opt: str):
+        """
+        引数「--delete-location」で指定された値の処理。
+        指定したLOCATONが含まれるVEVENTを削除する作業を行っている。
+        2026年3月改訂の業務記録の仕様に準じる。
+    """
+        global F
+
+        for i in list(opt):
+            if not i.isprintable():
+                raise ValueError(f"ERROR: {mess}使えない文字が含まれます。")
+
+        tmp_opt = opt.replace(" ", "") # 文中の半角空白除去
+        tmp_list = re.split('[:]', tmp_opt)
+        F.DELETE_LOCATION = []
+        for i in tmp_list:
+            if i.isspace(): # 半角空白以外もあるので、確認
+                continue
+            if len(i.strip()) == 0:
+                continue
+
+            F.DELETE_LOCATION.append(i.strip())
+
+        #if True:
+        #   print(F.DELETE_LOCATION)
+
 
 class RecurrenceID:
     """RecurrenceID関連処理"""
@@ -1973,6 +2045,10 @@ class RecurrenceID:
                 for k in range(F.CSV_POS2["H:LENGTH"], len(F.CSV_HEADER)):
                     if (buff[i][k] is None) or (outlook_bugfix and buff[i][k] == ConstDat.UNREF):
                         buff[i][k] = buff[flag_found_j][k]
+
+                # 2026年3月改訂の業務記録の仕様に準じる。
+                if buff[i][F.CSV_POS2["H:LOCATION"]] is None:
+                    buff[i][F.CSV_POS2["H:LOCATION"]] = buff[flag_found_j][F.CSV_POS2["H:LOCATION"]]
 
                 if F.override_recurrence_id:
                     buff[flag_found_j][F.CSV_POS2["H:UID"]] = None
@@ -2150,6 +2226,9 @@ class Main:
             recurrence_id = Misc.get_ics_val(component, 'recurrence-id', None, exit_none=False)
             recurrence_id = TZ.to_localtime(recurrence_id, exit_none=False)
 
+            # 2026年3月改訂の業務記録の仕様に準じる。location追加。
+            location = Misc.get_ics_val(component, 'location', None, exit_none=False)
+
             # debugコード
             if (F.DEBUG_UID is not None) and F.DEBUG_UID != uid:
                 continue
@@ -2168,13 +2247,21 @@ class Main:
             if TZ.hava_time(dtstart) != TZ.hava_time(dtend):
                 raise ValueError("ERROR: ICSデータ不整合: 同一VEVENTにdtstart/dtendに時刻情報の有り/無しが混在。")
 
+            # 2026年3月改訂の業務記録の仕様に準じる。
+            if type(location) is str:
+                # replace()は半角空白除去
+                location = location.replace(" ", "")
+                # strip()は両端の全角空白やTABや改行を除去
+                location = location.strip()
+
             if F.DEBUG_UID == uid:
                 print(f"STEP1: uid = {uid}", file=sys.stderr)
                 print(f"STEP1: dtstart = {dtstart}", file=sys.stderr)
                 print(f"STEP1: dtend = {dtend}", file=sys.stderr)
 
             # CSV用のlist生成開始。
-            buff_pre = [uid, TZ.to_localtime(dtstart), recurrence_id]
+            # 2026年3月改訂の業務記録の仕様に準じる。location追加。
+            buff_pre = [uid, TZ.to_localtime(dtstart), recurrence_id, location]
             buff_aft = Main.ics_parts_to_csv_buffer(component)
 
             # ICSのRRULE命令が未使用ならそのまま出力する。
@@ -2468,8 +2555,18 @@ ICSのSUMMARYの分割でヘッダを追加します。複数指定できます�
 ※内部処理の都合で、引数に「Hidden」は指定できません。繰返しスケジュー
 ルの一部上書き(RECURRENCE_ID)で別用途で使っているため。
 
+--convert-old-style-tourokunum, --convert-old-style-touroku-number
+本採用の業務記録の書式では一行めに「登録番号」と記載されている。これを
+CSVの旧書式の業務記録に変更する。具体的には一行めの行頭に記載されてい
+る「登録番号」という文字列を削除する。
+
+※2026年3月改訂の業務記録の仕様に準じる。
+
 -z, --enhance-tourokunum, --enhance-touroku-number
 --enhance-gyoumunum, --enhance-gyoumu-number
+※2026年3月改訂の業務記録の仕様に準じる。
+※本仕様は不採用となったため、保守していません(2026/3/23)
+
 SUMMARYの最後尾に「%数字」もしくは「g数字」があった場合は登録番号(業務
 番号)と見なし、メモ欄(description)に登録番号を書き込む。defaultは無効。
 
@@ -2477,7 +2574,6 @@ SUMMARYの最後尾に「%数字」もしくは「g数字」があった場合�
 た場合はSUMMARYに記載された登録番号を優先し、メモ欄(description)
 の登録番号を書き換える。
 ※v2.1で追加。
-※仕様検討中。
 ※詳細は関数ModCSV.enhanced_gyoumunum()をみよ。
 """
 
@@ -2668,7 +2764,7 @@ CSVのGaroonおよびOutlookClassic形式の場合のデフォルトです。
 
   例 : 2025-12-31, 12:31
 
-* メモ欄(DESCRIPTION)関係:
+* メモ欄(DESCRIPTION)/ロケーション(LOCATION)関係:
 
 --delete-4th-line-onward
 ICSメモ欄(description)の4行目以降を消してCSVに出力する。defaultでは消さない。
@@ -2683,6 +2779,26 @@ defaultではICSメモ欄(DESCRIPTION)のTeamsの会議インフォメーショ�
 ションを消さない。
 
 ※詳細は関数ModCSV.modify_description()をみよ。
+
+--delete-location="文字列:文字列"
+スケジュールのICSの要素「LOCATION」の値が引数で指定された文字列の場合、
+該当するスケジュールを出力から削除します。
+
+引数解析の都合で、LOCATIONに含まれる半角空白を除去してください。例えば
+ICSの要素が「LOCATION:Microsoft Teams 会議」の場合は半角空白を除去して
+「MicrosoftTeams会議」と指定してください。
+
+例: 以下の引数を指定すると、Teams会議のスケジュールを出力から削除しま
+す。
+
+  「--delete-location=MicrosoftTeams会議:MicrosoftTeamsMeeting」
+
+※Outlook(Web)の日本語環境および英語環境でTeams会議を開催した場合は上
+記の値になるが、LOCATIONは変更可能なため、異なる値を記入した場合は削除
+は行われない。
+
+※2026年3月改訂の業務記録の仕様に準じて追加したが、職場以外での
+利用も考えられるため、一般のオプションに分類した。
 
 --remove-tail-cr
 タイトル(SUMMARY)やメモ欄(DESCRIPTION)の最後の改行や空白を除去する。
