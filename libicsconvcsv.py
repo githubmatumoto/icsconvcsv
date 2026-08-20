@@ -434,7 +434,7 @@ class Misc:
         uidで指定したcsvを出力します。
         uidが未指定の場合、all_print=Trueを指定するとすべてのcsvを出力します。
     """
-        # Claude AIデバック。2026/8/20
+        # Claude AIデバッグ。2026/8/20
         # if文の修正。
         if uid is None:
             if not all_print:
@@ -600,7 +600,7 @@ class TZ:
 
         F.guess_timezone_initalized = False
 
-        # Caude AIデバック(2026/8/20)
+        # Caude AIデバッグ(2026/8/20)
         # cal_tzがNoneの場合(ICS解析エラー発生時にVTIMEZONEが
         # 見つからなかった場合)は、TimeZoneの候補が無いものとして扱う。
         # override_timezoneの指定があれば、後続の処理でそちらを優先する。
@@ -1154,7 +1154,7 @@ class PreSetup:
                 for e in CharSet:
                     if e.name == override_encoding:
                         override_encoding = e
-                # Claude AI デバック(2026/8/20)
+                # Claude AI デバッグ(2026/8/20)
                 # MEMO: Python3.9-3.11では非Enumメンバーを「in」で
                 # チェックするとTypeErrorが送出されるため(3.12で仕様変更)、
                 # type()での比較に統一する。
@@ -1399,7 +1399,7 @@ class FileIO:
         ファイルから読み込み、文字列型で返します。
     """
         ret = ""
-        # Glaude AI デバック(2026/8/20), ファイル名検査の厳格化。
+        # Glaude AI デバッグ(2026/8/20), ファイル名検査の厳格化。
         if (fname == "stdout") or (len(fname) == 0) or (fname[0] == "-"):
             #raise RuntimeError(f"入力ファイル")
             print(f"ERROR: 入力元のICSファイル名指定エラー: {fname}", file=sys.stderr)
@@ -1496,7 +1496,7 @@ class FileIO:
         #      [python] やむを得ない事情で utf-8 の文字集合からなる日本語を
         #       sjis エンコードしなければならない場合のワークアラウンド
 
-        # Glaude AI デバック(2026/8/20), ファイル名検査の厳格化。
+        # Glaude AI デバッグ(2026/8/20), ファイル名検査の厳格化。
         if (fname == "stdin") or (len(fname) == 0) or (fname[0] == "-"):
             raise RuntimeError(f"ファイル名指定エラー: {fname}")
 
@@ -1956,7 +1956,7 @@ class ModCSV:
 
         for i in list(opt):
             if not i.isprintable():
-                # Caude AIデバック(2026/8/20)
+                # Caude AIデバッグ(2026/8/20)
                 # 未定義変数 messを除去。
                 raise ValueError("ERROR: 引数--delete-locationに使えない文字が含まれます。")
 
@@ -2845,7 +2845,7 @@ defaultでは除去しない。
 --disable-recurrence-id
 RFC5545のRECURRENCE_ID関連の処理を一切おこなわない。
 
-* デバグ用:
+* デバッグ用:
 
 --disable-exdate-format-bugfix
 一部ICSファイルのRRULEのEXDATEの書式の問題でICSファイルの読み込みに失
@@ -2865,7 +2865,7 @@ DTSTART/DTENDに時刻情報を付与する修正を行う対策を行ってい�
 ※pythonではTimeZone情報が無い時刻をnaive、有る時刻をawareと呼ぶ。
 
 --DEBUG-UID="UID"
-デバグ用。特定のUIDのオブジェクトを各種箇所で表示する。
+デバッグ用。特定のUIDのオブジェクトを各種箇所で表示する。
 
 * 煩雑なファイル確認:
 
