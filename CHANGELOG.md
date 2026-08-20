@@ -342,6 +342,8 @@ Caude AIデバッグ。
 - TZ.guess_timezone_init(), FileIO.open_csv_object()において、ファイル名検査の厳格化。
 - Misc.csv_buffer_dump()において、if文の間違いの修正。
 
+- SUMMARYのスペルミス。デバックをデバッグに修正。
+
 - 引数 「--allday-format-add-time」を「--allday-format-addtime」と誤記。
   互換性のため、両方のオプションを有効とした。
 

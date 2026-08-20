@@ -96,7 +96,7 @@ class ConstDat:
     # ヘッダ分割のデフォルト
     SPLIT_SUMMARY_HEAD = ('出張', '往訪', '来訪', '会議', '休み')
     # ヘッダ分割の拡張のデフォルト
-    SPLIT_SUMMAEY_EXTEND_HEAD_GENERIC = "TODO,MEMO,授業,講義,実験,移動,TEST"
+    SPLIT_SUMMARY_EXTEND_HEAD_GENERIC = "TODO,MEMO,授業,講義,実験,移動,TEST"
 
     BAD_CHAR = ['\\', '/', '[', ']', '<', '>', '?', '"', "'", "*", '-', '@', '{', '}']
     #ヘッダ分割時に問題になりそうな文字をヘッダとして拒否する
@@ -1543,7 +1543,7 @@ class ModCSV:
     """
         global F
         if opt is None:
-            opt = ConstDat.SPLIT_SUMMAEY_EXTEND_HEAD_GENERIC
+            opt = ConstDat.SPLIT_SUMMARY_EXTEND_HEAD_GENERIC
 
         for i in list(opt):
             if i.isspace():
@@ -2555,7 +2555,7 @@ ICSのSUMMARYの分割で拡張。defaultは無効。
   出張,往訪,来訪,会議,休み
 
 引数を指定すると下記が追加:
-  {ConstDat.SPLIT_SUMMAEY_EXTEND_HEAD_GENERIC}
+  {ConstDat.SPLIT_SUMMARY_EXTEND_HEAD_GENERIC}
 
 ※詳細は関数ModCSV.split_garoon_style_summary()とPreSetup.parse_args()
 をみよ。
