@@ -891,7 +891,7 @@ class PreSetup:
     @staticmethod
     ###
     #########################################################################
-    # vobjectがRRULEのEXDATE関連で例外を履く記述の修正関数
+    # vobjectがRRULEのEXDATE関連で例外を吐く記述の修正関数
     #
     def set_format(override_encoding: CharSet, override_all_day_format: AllDayFormat, \
                    override_datetime_format: DateTimeFormat):
@@ -1109,7 +1109,7 @@ class PreSetup:
         long_opt += ["show-timezone"]
         #最後に指定されたオプションが有効
         long_opt += ["allday-format-today", "allday-format-nextday"]
-        long_opt += ["allday-format-am12", "allday-format-addtime"]
+        long_opt += ["allday-format-am12", "allday-format-add-time", "allday-format-addtime"]
         long_opt += ["allday-format-today-remove-time", "allday-format-nextday-remove-time"]
 
         #最後に指定されたオプションが有効
@@ -1193,7 +1193,8 @@ class PreSetup:
                 F.print_csv_header = True
             elif o == "--show-timezone": # old opt: -t
                 F.csv_show_timezone = True
-            elif o in ("--allday-format-addtime", \
+            elif o in ("--allday-format-add-time", \
+                       "--allday-format-addtime", \
                        "--allday-format-am12"): # old opt: -o
                 override_all_day_format = AllDayFormat.addtime
             elif o == "--allday-format-today":
@@ -1707,7 +1708,7 @@ class ModCSV:
         登録番号を4桁の数字としている。5桁以上なら要修正
 
 
-        デバグコード:
+        デバッグコード:
           debug_modify_enhanced_gyoumunum.py
 
         処理の流れ:
@@ -2002,7 +2003,7 @@ class RecurrenceID:
         空文字の場合と未定義の場合を区別するため、未定義の場合は"(N/A)"が入ってる。
 
         restore_aux()を呼び出したあと、復元に失敗しているVEVENTがあれば、
-        outlook_bugfix=Trueにして再度呼び出している。デバック時は注意。
+        outlook_bugfix=Trueにして再度呼び出している。デバッグ時は注意。
 
         """
         bad_count = 0
@@ -2683,7 +2684,7 @@ ICSファイルはUTF-8である。UTF-8をshift_jisに変換するときにエ�
 
 -Ebackslashreplace, -Ereplace, -Estrict, -Eignore
 
-それ以外の引数はPythonのマニュアルと同じ挙動のため、以下の参照してほしい。
+それ以外の引数はPythonのマニュアルと同じ挙動のため、以下を参照してほしい。
 
  https://docs.python.org/ja/3/howto/unicode.html#converting-to-bytes
 
@@ -2741,7 +2742,7 @@ ICSでは終日スケジュールで時刻がある「0:00開始翌日0:00終了
 
 ※ICSの内部形式は本形式になっています。
 
---allday-format-add-time, --allday-format-am12
+--allday-format-add-time, --allday-format-addtime, --allday-format-am12
 終日スケジュール(時刻なし)のCSV出力形式を「0:00開始翌日0:00終了」とす
 る。
 
@@ -2754,10 +2755,10 @@ ICSでは終日スケジュールで時刻がある「0:00開始翌日0:00終了
 終日スケジュール(時刻あり/時刻なし)の双方の出力形式を「時刻なしの、当
 日開始、当日終了」とする。
 
-※FlotingTimeのICSをOutlookにインポートすると、終日スケジュール(時刻なし)
+※Floting TimeのICSをOutlookにインポートすると、終日スケジュール(時刻なし)
 が終日スケジュール(時刻あり)に変化します。本問題の差分をなくすため実装。
 
---allday-format-nexday-remove-time
+--allday-format-nextday-remove-time
 終日スケジュール(時刻あり/時刻なし)の双方の出力形式を「時刻なしの、当
 日開始、翌日終了」とする。
 
@@ -2871,7 +2872,7 @@ DTSTART/DTENDに時刻情報を付与する修正を行う対策を行ってい�
 
 --enable-file-exist-test
 煩雑なファイル確認を有効にします。出力に指定されたCSVファイルがすでに
-存在する場合は確認を求めます。入力に指定されたICSファイルがの日付が古
+存在する場合は確認を求めます。入力に指定されたICSファイルの日付が古
 いと警告を出したり処理を停止します。
 
 --disable-file-exist-test
@@ -2959,7 +2960,7 @@ __v = tuple(sys.version_info)
 # macOSの標準Pythonが3.9なので3.9以上としている。
 #
 if __v < (3, 9):
-    print(f"ERROR: Pythonはversion3.9以上が必要です。現在version {__v[0]}.{__v[1]}'", file=sys.stderr)
+    print(f"ERROR: Pythonはversion3.9以上が必要です。現在version {__v[0]}.{__v[1]}", file=sys.stderr)
     sys.exit(1)
 ###
 

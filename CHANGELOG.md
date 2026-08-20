@@ -191,7 +191,7 @@ def modify_reference_id_data()
 - ソフトウエア名をics2gacsvからicsconvcsvに変更。 ソフトウエア名に商標
 であるCybozu Garoonの一部である「ga」が含まれていたため。
 
-- README.txtおよびINSTALL.txtをプレインテキストからMAKRDOWN言語に変更。
+- README.txtおよびINSTALL.txtをプレインテキストからMARKDOWN言語に変更。
 ファイル名をREADME.mdおよびINSTALL.mdに変更。9割プレインテキストですの
 でテキストエディタで閲覧頂いても問題ありませんが、一点だけ補足すると
 「＜BR＞」は改行の命令になりますのでコマンド入力例などをコピペするとき
@@ -333,7 +333,7 @@ def modify_reference_id_data()
 ## 2026-8-20 Version:3.2betaX
 (内部メモ:subversion revision 2xxx, フォルダv3.2)
 
-Caude AIデバック。
+Caude AIデバッグ。
 - ModCSV.set_delete_location()において、未定義変数 mess(NameError)があり。
 - PreSetup.parse_args()において、Python3.9-3.11では非Enumメンバーを
   「in」でチェックするとTypeErrorが送出されるため(3.12で仕様変更)、
@@ -341,6 +341,12 @@ Caude AIデバック。
 - TZ.guess_timezone_init()において、cal_tzがNoneの時に-T指定でもクラッシュ
 - TZ.guess_timezone_init(), FileIO.open_csv_object()において、ファイル名検査の厳格化。
 - Misc.csv_buffer_dump()において、if文の間違いの修正。
+
+- 引数 「--allday-format-add-time」を「--allday-format-addtime」と誤記。
+  互換性のため、両方のオプションを有効とした。
+
+- 引数 「--allday-format-nextday-remove-time」が文章中で nexdayになっていた。
+  文章のみ修正。
 
 
 # Known bugs:
