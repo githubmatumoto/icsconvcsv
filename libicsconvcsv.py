@@ -2406,7 +2406,7 @@ class Main:
             raise RuntimeError(f"ERROR: ファイル読み込みエラー: ファイル行数: {len(ics_data)}")
 
         ######################
-        # ライブラリvobjectがのicsファイルの読み込む時に例外を履く
+        # ライブラリvobjectがicsファイルを読み込む時に例外を吐く
         # 記述の修正を行う。
         # liics2gacsv(v1.4)では RRULEのEXDATEの記述の修正のみ。
         if F.exdate_format_bugfix:
@@ -2755,7 +2755,7 @@ ICSでは終日スケジュールで時刻がある「0:00開始翌日0:00終了
 終日スケジュール(時刻あり/時刻なし)の双方の出力形式を「時刻なしの、当
 日開始、当日終了」とする。
 
-※Floting TimeのICSをOutlookにインポートすると、終日スケジュール(時刻なし)
+※Floating TimeのICSをOutlookにインポートすると、終日スケジュール(時刻なし)
 が終日スケジュール(時刻あり)に変化します。本問題の差分をなくすため実装。
 
 --allday-format-nextday-remove-time
