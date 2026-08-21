@@ -330,25 +330,31 @@ def modify_reference_id_data()
   SUMMARYに記載する拡張業務番号は不採用となったため、kiroku.pyから引数
   「-z」/「--enhance-gyoumunum」を削除。
 
-## 2026-8-20 Version:3.2betaX
-(内部メモ:subversion revision 2xxx, フォルダv3.2)
+## 2026-8-21 Version:3.2beta3
+(内部メモ:subversion revision 2265, フォルダv3.2)
 
 Caude AIデバッグ。
 - ModCSV.set_delete_location()において、未定義変数 mess(NameError)があり。
+
 - PreSetup.parse_args()において、Python3.9-3.11では非Enumメンバーを
   「in」でチェックするとTypeErrorが送出されるため(3.12で仕様変更)、
   type()での比較に統一する。
+
 - TZ.guess_timezone_init()において、cal_tzがNoneの時に-T指定でもクラッシュ
+
 - TZ.guess_timezone_init(), FileIO.open_csv_object()において、ファイル名検査の厳格化。
+
 - Misc.csv_buffer_dump()において、if文の間違いの修正。
 
-- SUMMARYのスペルミス。デバックをデバッグに修正。
+- SUMMARYのスペルミス。「デバック」を「デバッグ」に修正。
 
 - 引数 「--allday-format-add-time」を「--allday-format-addtime」と誤記。
   互換性のため、両方のオプションを有効とした。
 
 - 引数 「--allday-format-nextday-remove-time」が文章中で nexdayになっていた。
   文章のみ修正。
+
+- 日本語の校正。
 
 
 # Known bugs:
