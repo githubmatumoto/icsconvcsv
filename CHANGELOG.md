@@ -191,7 +191,7 @@ def modify_reference_id_data()
 - ソフトウエア名をics2gacsvからicsconvcsvに変更。 ソフトウエア名に商標
 であるCybozu Garoonの一部である「ga」が含まれていたため。
 
-- README.txtおよびINSTALL.txtをプレインテキストからMAKRDOWN言語に変更。
+- README.txtおよびINSTALL.txtをプレインテキストからMARKDOWN言語に変更。
 ファイル名をREADME.mdおよびINSTALL.mdに変更。9割プレインテキストですの
 でテキストエディタで閲覧頂いても問題ありませんが、一点だけ補足すると
 「＜BR＞」は改行の命令になりますのでコマンド入力例などをコピペするとき
@@ -330,6 +330,33 @@ def modify_reference_id_data()
   SUMMARYに記載する拡張業務番号は不採用となったため、kiroku.pyから引数
   「-z」/「--enhance-gyoumunum」を削除。
 
+## 2026-8-21 Version:3.2beta3
+(内部メモ:subversion revision 2265, フォルダv3.2)
+
+Caude AIデバッグ。
+- ModCSV.set_delete_location()において、未定義変数 mess(NameError)があり。
+
+- PreSetup.parse_args()において、Python3.9-3.11では非Enumメンバーを
+  「in」でチェックするとTypeErrorが送出されるため(3.12で仕様変更)、
+  type()での比較に統一する。
+
+- TZ.guess_timezone_init()において、cal_tzがNoneの時に-T指定でもクラッシュ
+
+- TZ.guess_timezone_init(), FileIO.open_csv_object()において、ファイル名検査の厳格化。
+
+- Misc.csv_buffer_dump()において、if文の間違いの修正。
+
+- SUMMARYのスペルミス。「デバック」を「デバッグ」に修正。
+
+- 引数 「--allday-format-add-time」を「--allday-format-addtime」と誤記。
+  互換性のため、両方のオプションを有効とした。
+
+- 引数 「--allday-format-nextday-remove-time」が文章中で nexdayになっていた。
+  文章のみ修正。
+
+- 日本語の校正。
+
+
 # Known bugs:
 
 - 西暦を判断する基準の正規表現が「[^\\d]20[\\d]{6}」などになってるので、
@@ -359,5 +386,8 @@ DESCRIPTIONに最初から上記が入って場合は誤動作する。
 
 - RDATEに対応はしたが、動作確認例が少ないため、要注意。
 
-- 引数「--delete-location」で指定するlocationを複数指定する場合「:」区切りとしているが、
-  locationの値に「:」が含まれる場合は正常に処理できない。
+- 引数「--delete-location」で指定するlocationを複数指定する場合「:」区
+  切りとしているが、 locationの値に「:」が含まれる場合は正常に処理できない。
+
+- (Caude AI指摘) find_ics_data()が最初の一致行のみ返す実装のため、同一
+  VEVENT内に独立したEXDATE:行が複数存在すると2件目以降が修正されない。
